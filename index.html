@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evntry — Ticketing for local venues</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #252525;
+    --accent: #FF5C1A;
+    --accent-dim: rgba(255,92,26,0.10);
+    --text: #F0EDE6;
+    --muted: #888880;
+    --faint: #2A2A28;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6vw;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.88);
+    backdrop-filter: blur(14px);
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+
+  .nav-link {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+  .nav-link:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 6vw 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255,92,26,0.06) 0%, transparent 65%);
+    top: 40%;
+    right: -100px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(68px, 11vw, 130px);
+    line-height: 0.90;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+    max-width: 860px;
+    margin-bottom: 36px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .form-wrap { max-width: 480px; }
+
+  .email-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .email-row input[type="email"] {
+    flex: 1;
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 13px 16px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .email-row input[type="email"]::placeholder { color: var(--muted); }
+  .email-row input[type="email"]:focus { border-color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .form-note {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .success-msg {
+    display: none;
+    font-size: 14px;
+    color: #4ade80;
+    margin-top: 14px;
+    font-weight: 500;
+  }
+
+  .trust-row {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .trust-label { font-size: 13px; color: var(--muted); }
+  .trust-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .trust-pill {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .divider { height: 1px; background: var(--border); }
+
+  section { padding: 100px 6vw; }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 60px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 56px;
+    line-height: 1.65;
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pain-card {
+    background: var(--surface);
+    padding: 36px 30px;
+  }
+
+  .pain-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pain-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .pain-card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .steps { display: flex; flex-direction: column; max-width: 680px; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--faint);
+    padding-top: 4px;
+  }
+
+  .step-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-bottom: 12px;
+  }
+
+  .step-body h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .step-body p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .diff-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 24px;
+    transition: border-color 0.2s;
+  }
+  .diff-card:hover { border-color: #3a3a38; }
+
+  .diff-card .icon-wrap {
+    width: 40px; height: 40px;
+    background: var(--accent-dim);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    font-size: 19px;
+  }
+
+  .diff-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .diff-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  .compare {
+    max-width: 620px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 52px;
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 14px 24px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    gap: 16px;
+  }
+  .compare-row:last-child { border-bottom: none; }
+
+  .compare-header {
+    background: var(--surface2);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .compare-header .ev { color: var(--accent); }
+  .compare-feature { color: var(--muted); }
+  .ev-val { color: var(--text); font-weight: 500; }
+  .check { color: #4ade80; }
+  .cross { color: #3a3a38; }
+
+  .cta-band {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 6vw;
+    text-align: center;
+  }
+
+  .cta-band h2 { margin-bottom: 16px; }
+  .cta-band .section-sub { margin: 0 auto 48px; }
+  .cta-band .form-wrap { margin: 0 auto; }
+  .cta-band .email-row { justify-content: center; }
+  .cta-band .form-note { text-align: center; }
+  .cta-band .success-msg { justify-content: center; }
+
+  footer {
+    padding: 32px 6vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); transition: color 0.15s; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">EVN<span>T</span>RY</div>
+  <div class="nav-right">
+    <a href="fans.html" class="nav-link">For fans →</a>
+    <a href="musicians.html" class="nav-link">For musicians →</a>
+    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Request access</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="eyebrow">For venue owners &amp; event organizers</p>
+  <h1>Sell tickets.<br>Not your <em>time.</em></h1>
+  <p class="hero-sub">
+    Set up an event in under 5 minutes. Sell tickets with <strong>zero fees for your fans.</strong> Scan the door from your phone. That's it.
+  </p>
+
+  <div class="form-wrap">
+    <form name="venue-access" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's1')">
+      <input type="hidden" name="form-name" value="venue-access">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="email-row">
+        <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
+        <button type="submit" class="btn-primary">Request access</button>
+      </div>
+      <p class="form-note">For venue owners only. No spam, ever.</p>
+      <p class="success-msg" id="s1">✓ You're on the list. We'll reach out shortly.</p>
+    </form>
+  </div>
+
+  <div class="trust-row">
+    <span class="trust-label">Built for</span>
+    <div class="trust-pills">
+      <span class="trust-pill">Bars</span>
+      <span class="trust-pill">Live music venues</span>
+      <span class="trust-pill">Clubs</span>
+      <span class="trust-pill">Event organizers</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">The problem</p>
+  <h2>Every event.<br>The same<br><em>three problems.</em></h2>
+  <p class="section-sub">Before the night, during it, and after. Evntry fixes all three.</p>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-num">Before the event</span>
+      <h3>You never know who's actually coming</h3>
+      <p>Paper lists, WhatsApp reservations, inbox messages — spread across three places. Someone says they're coming. Do they mean it? You find out at the door. A paid ticket is a real commitment. An "interested" click isn't.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">On the night</span>
+      <h3>The door is always chaos</h3>
+      <p>Cash box, handwritten list, someone's phone with a spreadsheet. The first 30 minutes of every event is a queue and an argument. Slow entry kills the vibe before the first song even starts.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">After the event</span>
+      <h3>You have nothing to show for it</h3>
+      <p>You had a great night. 150 people loved it. Then it's over — no names, no emails, no data. Next week you're back to zero, promoting to the void, hoping the same crowd sees your post.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">How it works</p>
+  <h2>From idea<br>to door-ready<br>in <em>5 minutes</em></h2>
+  <p class="section-sub">Three steps. No training required.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <span class="step-tag">Venue app</span>
+        <h3>Create your event</h3>
+        <p>Open Evntry on your phone. Add the name, date, ticket price, and a poster. Set a capacity or leave it open. Hit publish. Done.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <span class="step-tag">Fans</span>
+        <h3>Share your link</h3>
+        <p>You get a shareable ticket link instantly. Post it anywhere. Fans buy directly — no extra app needed, no fees added on top of your price.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <span class="step-tag">Door</span>
+        <h3>Scan &amp; go</h3>
+        <p>On the night, scan QR codes at the door from your phone. See live how many people have arrived. No printer, no clipboard, no chaos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Features</p>
+  <h2>Everything<br>you need.<br><em>Nothing you don't.</em></h2>
+  <p class="section-sub">Stripped down to what actually matters for a local venue.</p>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="icon-wrap">🚫</div>
+      <h3>Zero fan fees</h3>
+      <p>The price you set is exactly what fans pay. No booking fee added at checkout. Better conversion, happier audience.</p>
+    </div>
+    <div class="diff-card">
+      <div class="icon-wrap">📱</div>
+      <h3>Mobile-first</h3>
+      <p>Create events, track sales, scan the door — all from your phone. No desktop, no login on a slow laptop before doors open.</p>
+    </div>
+    <div class="diff-card">
+      <div class="icon-wrap">🎟</div>
+      <h3>Free &amp; paid events</h3>
+      <p>Free gig with optional donations, or a fully ticketed show. Both work. You set the terms every time.</p>
+    </div>
+    <div class="diff-card">
+      <div class="icon-wrap">💳</div>
+      <h3>Card payments via Stripe</h3>
+      <p>Payments go through Stripe — fast, reliable, trusted. No cash handling, no bank transfer chasing. Funds flow directly to you.</p>
+    </div>
+    <div class="diff-card">
+      <div class="icon-wrap">📊</div>
+      <h3>Live ticket tracking</h3>
+      <p>Know how many tickets are sold before the night even starts. Plan your staff, your bar stock, your setup — with actual numbers.</p>
+    </div>
+    <div class="diff-card">
+      <div class="icon-wrap">🔗</div>
+      <h3>Shareable links</h3>
+      <p>No app needed for your fans to buy. A link works everywhere — Instagram bio, Facebook event, WhatsApp group, story.</p>
+    </div>
+  </div>
+
+  <div class="compare">
+    <div class="compare-row compare-header">
+      <span></span>
+      <span class="ev">Evntry</span>
+      <span>Others</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Fees added for fans</span>
+      <span class="ev-val check">None</span>
+      <span class="cross">Booking fee on every ticket</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Event setup time</span>
+      <span class="ev-val check">Under 5 min</span>
+      <span class="cross">Much longer</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Runs on your phone</span>
+      <span class="ev-val check">Yes</span>
+      <span class="cross">Web-first</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Contracts required</span>
+      <span class="ev-val check">No</span>
+      <span class="cross">Sometimes</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Fan subscription layer</span>
+      <span class="ev-val check">Included</span>
+      <span class="cross">Not available</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Request access</p>
+  <h2>Ready to stop<br>losing <em>time?</em></h2>
+  <p class="section-sub">Evntry is rolling out to a select group of venues first. Get in early and help shape the product.</p>
+  <div class="form-wrap">
+    <form name="venue-access-bottom" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's2')">
+      <input type="hidden" name="form-name" value="venue-access-bottom">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="email-row">
+        <input type="email" name="email" placeholder="Your work email" required>
+        <button type="submit" class="btn-primary">Request access</button>
+      </div>
+      <p class="form-note">We'll be in touch within a few days.</p>
+      <p class="success-msg" id="s2">✓ You're on the list. Talk soon.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">EVN<span>T</span>RY</div>
+  <p>© 2025 Evntry &nbsp;·&nbsp; <a href="fans.html">For fans →</a> &nbsp;·&nbsp; <a href="musicians.html">For musicians →</a></p>
+</footer>
+
+<script>
+  function submitNetlify(e, successId) {
+    e.preventDefault();
+    const form = e.target;
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    }).then(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    }).catch(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    });
+  }
+</script>
+</body>
+</html>

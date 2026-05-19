@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evntry — For musicians</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #252525;
+    --accent: #FF5C1A;
+    --accent-dim: rgba(255,92,26,0.10);
+    --text: #F0EDE6;
+    --muted: #888880;
+    --faint: #2A2A28;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6vw;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.88);
+    backdrop-filter: blur(14px);
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+
+  .nav-link {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.15s;
+  }
+  .nav-link:hover { color: var(--text); }
+
+  .nav-cta {
+    background: transparent;
+    color: var(--text);
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .nav-cta:hover { border-color: #444; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 6vw 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255,92,26,0.07) 0%, transparent 65%);
+    top: 30%;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(68px, 11vw, 130px);
+    line-height: 0.90;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+    max-width: 900px;
+    margin-bottom: 36px;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .form-wrap { max-width: 480px; }
+
+  .email-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .email-row input[type="email"] {
+    flex: 1;
+    min-width: 200px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 13px 16px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .email-row input[type="email"]::placeholder { color: var(--muted); }
+  .email-row input[type="email"]:focus { border-color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .form-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+
+  .success-msg {
+    display: none;
+    font-size: 14px;
+    color: #4ade80;
+    margin-top: 14px;
+    font-weight: 500;
+  }
+
+  .free-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .free-badge::before {
+    content: '★';
+    font-size: 11px;
+  }
+
+  .divider { height: 1px; background: var(--border); }
+
+  section { padding: 100px 6vw; }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 60px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 56px;
+    line-height: 1.65;
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pain-card {
+    background: var(--surface);
+    padding: 36px 30px;
+  }
+
+  .pain-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pain-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .pain-card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .perk-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 26px;
+    transition: border-color 0.2s;
+  }
+  .perk-card:hover { border-color: #3a3a38; }
+
+  .perk-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  .perk-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .perk-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  .how-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .step-box {
+    background: var(--surface2);
+    padding: 32px 26px;
+  }
+
+  .step-box-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 40px;
+    color: var(--faint);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .step-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  .free-band {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 720px;
+  }
+
+  .free-header {
+    background: var(--accent);
+    padding: 28px 32px;
+  }
+
+  .free-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .free-header p {
+    color: #fff;
+    opacity: 0.9;
+    font-size: 15px;
+  }
+
+  .free-body {
+    background: var(--surface);
+    padding: 28px 32px;
+  }
+
+  .free-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+  .free-perk {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  .free-perk-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+  .free-perk strong { color: var(--text); font-weight: 500; }
+
+  .free-note {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .cta-band {
+    background: var(--bg);
+    padding: 100px 6vw;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-band h2 { margin-bottom: 16px; }
+  .cta-band .section-sub { margin: 0 auto 48px; }
+  .cta-band .form-wrap { margin: 0 auto; }
+  .cta-band .email-row { justify-content: center; }
+  .cta-band .form-note { text-align: center; }
+
+  footer {
+    padding: 32px 6vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); transition: color 0.15s; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">EVN<span>T</span>RY</div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">For venues →</a>
+    <a href="fans.html" class="nav-link">For fans →</a>
+    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Join the list</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="eyebrow">For musicians &amp; bands</p>
+  <span class="free-badge">Always free for musicians</span>
+  <h1>Play more.<br>Promote <em>less.</em></h1>
+  <p class="hero-sub">
+    One profile. Every gig you play. Every fan you've ever made — <strong>finally in one place.</strong> No more chasing the algorithm to remind people you exist.
+  </p>
+
+  <div class="form-wrap">
+    <form name="musician-signup" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's1')">
+      <input type="hidden" name="form-name" value="musician-signup">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="email-row">
+        <input type="email" name="email" id="hero-email" placeholder="Your email address" required>
+        <button type="submit" class="btn-primary">Get early access</button>
+      </div>
+      <p class="form-note">For musicians, bands, DJs, solo acts. No spam.</p>
+      <p class="success-msg" id="s1">✓ You're on the list. We'll be in touch.</p>
+    </form>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">The problem</p>
+  <h2>Promoting your gigs<br>shouldn't be your<br><em>second job</em></h2>
+  <p class="section-sub">Every musician deals with the same three headaches.</p>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-num">Pain 01</span>
+      <h3>Your fans don't know you have a gig</h3>
+      <p>You post on Instagram. Half your followers don't see it. The venue posts maybe, maybe not. Your loyal fans miss the show because the algorithm didn't surface it.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">Pain 02</span>
+      <h3>You have no home base</h3>
+      <p>Spotify is for streams. Instagram is for clips. Bandcamp is for merch. Nowhere lists "every gig this person is playing" — so fans never know where to look.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">Pain 03</span>
+      <h3>Venues find you the hard way</h3>
+      <p>Bookers stumble onto you through other bands, word of mouth, late-night Instagram scrolls. No easy way for a venue to find a sax player or a punk trio when they need one.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">What you get</p>
+  <h2>Built for the<br>working <em>musician</em></h2>
+  <p class="section-sub">Not a streaming platform. Not a social network. A real tool for getting more people to your gigs.</p>
+
+  <div class="perks-grid">
+    <div class="perk-card">
+      <span class="perk-icon">🎸</span>
+      <h3>Your profile</h3>
+      <p>Bio, photos, links, music samples. The one page you send to anyone — venue, journalist, new fan — that tells them everything.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">📅</span>
+      <h3>Every gig, one place</h3>
+      <p>When you play at a venue on Evntry, your gig auto-appears on your profile. No double-posting, no manual updates.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">🔔</span>
+      <h3>Fans follow you</h3>
+      <p>Fans hit follow once and get notified every time you have a gig — no matter which venue you're playing. Direct line to your audience.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">📨</span>
+      <h3>Booking inquiries</h3>
+      <p>Venues searching for acts can find you and send a booking request straight through the app. No more cold DMs disappearing into requests folders.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="how-section">
+  <p class="eyebrow">How it works</p>
+  <h2>Three steps.<br><em>Then play.</em></h2>
+  <p class="section-sub">Set up your profile once. Forget about it. Focus on the music.</p>
+
+  <div class="steps-row">
+    <div class="step-box">
+      <div class="step-box-num">01</div>
+      <h3>Create your profile</h3>
+      <p>Sign up free. Add your bio, photos, music links, and the genres you play. Takes 5 minutes.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">02</div>
+      <h3>Get tagged on gigs</h3>
+      <p>When a venue books you for an event on Evntry, they tag you. Your gig appears on your profile automatically.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">03</div>
+      <h3>Fans get notified</h3>
+      <p>Anyone who follows you gets a notification. They tap, buy a ticket, show up. You play to a full room.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Pricing</p>
+  <h2>Free.<br><em>That's it.</em></h2>
+  <p class="section-sub">Musicians are the reason the platform exists. You shouldn't have to pay to be discovered.</p>
+
+  <div class="free-band">
+    <div class="free-header">
+      <h3>Musician account</h3>
+      <p>Everything you need to be found, followed, and booked.</p>
+    </div>
+    <div class="free-body">
+      <ul class="free-perks">
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Unlimited gig listings</strong> — no caps, ever</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Unlimited followers</strong> — your fans, your direct line</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Booking inbox</strong> — venues come to you</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Basic analytics</strong> — see who's following, who's coming</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Profile customization</strong> — bio, photos, links, samples</span></li>
+      </ul>
+      <p class="free-note">A Pro tier with advanced features may come later. The core experience stays free, forever.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Join the list</p>
+  <h2>Ready to be<br><em>found?</em></h2>
+  <p class="section-sub">Leave your email and we'll let you know the moment Evntry is live for musicians.</p>
+
+  <div class="form-wrap">
+    <form name="musician-signup-bottom" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's2')">
+      <input type="hidden" name="form-name" value="musician-signup-bottom">
+      <input type="hidden" name="bot-field" style="display:none">
+      <div class="email-row">
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit" class="btn-primary">Get early access</button>
+      </div>
+      <p class="form-note">No spam. One email when we launch.</p>
+      <p class="success-msg" id="s2">✓ You're on the list. See you on stage.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">EVN<span>T</span>RY</div>
+  <p>© 2025 Evntry &nbsp;·&nbsp; <a href="index.html">For venues →</a> &nbsp;·&nbsp; <a href="fans.html">For fans →</a></p>
+</footer>
+
+<script>
+  function submitNetlify(e, successId) {
+    e.preventDefault();
+    const form = e.target;
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    }).then(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    }).catch(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    });
+  }
+</script>
+
+</body>
+</html>
