@@ -444,6 +444,27 @@
   footer p { font-size: 13px; color: var(--muted); }
   footer a { color: var(--muted); transition: color 0.15s; }
   footer a:hover { color: var(--text); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+  .mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; background: rgba(8,8,8,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 20px 5vw 24px; flex-direction: column; z-index: 99; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 16px; color: var(--muted); padding: 14px 0; border-bottom: 1px solid var(--border); transition: color 0.15s; }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu .mob-cta { margin-top: 16px; background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; padding: 13px 0; border-radius: 6px; text-align: center; border-bottom: none; }
+
+  @media (max-width: 680px) {
+    .nav-link { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 5vw; height: 56px; }
+    .hero { padding: 96px 5vw 60px; }
+    section { padding: 56px 5vw; }
+    .cta-band { padding: 64px 5vw; }
+    .email-row { flex-direction: column; }
+    .email-row input[type="email"] { min-width: unset; width: 100%; }
+    .btn-primary { width: 100%; }
+    footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -454,8 +475,15 @@
     <a href="index.html" class="nav-link">For venues →</a>
     <a href="fans.html" class="nav-link">For fans →</a>
     <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Join the list</button>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">For venues</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="fans.html">For fans</a>
+  <a href="#hero-email" class="mob-cta" onclick="closeMenu()">Join the list</a>
+</div>
 
 <section class="hero">
   <p class="eyebrow">For musicians &amp; bands</p>
@@ -612,6 +640,8 @@
 </footer>
 
 <script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
   function submitNetlify(e, successId) {
     e.preventDefault();
     const form = e.target;
