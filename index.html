@@ -439,6 +439,44 @@
   footer p { font-size: 13px; color: var(--muted); }
   footer a { color: var(--muted); transition: color 0.15s; }
   footer a:hover { color: var(--text); }
+
+  @media (max-width: 680px) {
+    /* Nav: hide links, keep logo + CTA */
+    .nav-link { display: none; }
+    nav { padding: 0 5vw; height: 56px; }
+
+    /* Hero */
+    .hero { padding: 100px 5vw 72px; }
+    .hero-sub { font-size: 17px; }
+
+    /* Sections */
+    section { padding: 64px 5vw; }
+    .cta-band { padding: 72px 5vw; }
+
+    /* Pain grid — single column */
+    .pain-grid { grid-template-columns: 1fr; }
+
+    /* Diff cards — single column */
+    .diff-grid { grid-template-columns: 1fr; }
+
+    /* Compare table: smaller text */
+    .compare-row { font-size: 13px; padding: 12px 16px; gap: 10px; }
+
+    /* Steps: tighter */
+    .step { grid-template-columns: 44px 1fr; gap: 16px; padding: 28px 0; }
+    .step-num { font-size: 40px; }
+
+    /* Email row: stack */
+    .email-row { flex-direction: column; }
+    .email-row input[type="email"] { min-width: unset; width: 100%; }
+    .btn-primary { width: 100%; }
+
+    /* Trust pills: wrap tighter */
+    .trust-row { margin-top: 44px; }
+
+    /* Footer: stack */
+    footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
 </style>
 </head>
 <body>

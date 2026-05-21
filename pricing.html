@@ -489,9 +489,38 @@
   footer a { color: var(--muted); transition: color 0.15s; }
   footer a:hover { color: var(--text); }
 
-  @media (max-width: 600px) {
+  @media (max-width: 680px) {
+    /* Nav: hide links, keep logo + CTA */
+    .nav-link { display: none; }
+    nav { padding: 0 5vw; height: 56px; }
+
+    /* Hero */
+    .hero { padding: 96px 5vw 60px; }
+    .hero-sub { font-size: 16px; }
+
+    /* Sections */
+    section { padding: 56px 5vw; }
+    .cta-band { padding: 64px 5vw; }
+
+    /* Pricing cards — single column, tighter padding */
     .pricing-grid { grid-template-columns: 1fr; }
-    .explainer { grid-template-columns: 1fr; }
+    .plan { padding: 28px 22px 24px; }
+    .price-amount { font-size: 44px; }
+    .price-free { font-size: 44px; }
+
+    /* Explainer */
+    .explainer { grid-template-columns: 1fr; padding: 22px 20px; }
+
+    /* FAQ */
+    .faq-q { font-size: 19px; }
+
+    /* Email row: stack on small screens */
+    .email-row { flex-direction: column; }
+    .email-row input[type="email"] { min-width: unset; width: 100%; }
+    .btn-primary { width: 100%; }
+
+    /* Footer: stack */
+    footer { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>
 </head>
