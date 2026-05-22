@@ -692,5 +692,140 @@
   }
 </script>
 
+
+<!-- Evntry AI Chat Widget -->
+<style>
+  #evntry-chat-bubble {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #FF5C1A; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(255,92,26,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #evntry-chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(255,92,26,0.55); }
+  #evntry-chat-bubble svg { width: 24px; height: 24px; color: #fff; flex-shrink: 0; }
+  #evntry-chat-panel {
+    position: fixed; bottom: 88px; right: 24px; z-index: 9998;
+    width: 320px; max-height: 440px;
+    background: #111111; border: 1px solid #252525; border-radius: 14px;
+    display: flex; flex-direction: column;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    transform: scale(0.95) translateY(8px); opacity: 0;
+    pointer-events: none;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+  }
+  #evntry-chat-panel.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  #evntry-chat-header {
+    padding: 14px 16px; border-bottom: 1px solid #252525;
+    display: flex; align-items: center; gap: 10px;
+  }
+  #evntry-chat-header .dot { width: 8px; height: 8px; border-radius: 50%; background: #FF5C1A; flex-shrink: 0; }
+  #evntry-chat-header span { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.04em; color: #F0EDE6; text-transform: uppercase; }
+  #evntry-chat-messages {
+    flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px;
+    scrollbar-width: thin; scrollbar-color: #252525 transparent;
+  }
+  .evntry-msg {
+    max-width: 88%; padding: 9px 13px; border-radius: 10px; font-size: 13px; line-height: 1.55;
+  }
+  .evntry-msg.bot { background: #1a1a1a; border: 1px solid #252525; color: #c8c5be; align-self: flex-start; border-bottom-left-radius: 3px; }
+  .evntry-msg.user { background: #FF5C1A; color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+  .evntry-msg.typing { color: #555; font-style: italic; }
+  #evntry-chat-input-row {
+    padding: 10px 12px; border-top: 1px solid #252525; display: flex; gap: 8px; align-items: flex-end;
+  }
+  #evntry-chat-input {
+    flex: 1; background: #1a1a1a; border: 1px solid #252525; border-radius: 8px;
+    padding: 8px 12px; font-size: 13px; color: #F0EDE6; font-family: 'Figtree', sans-serif;
+    outline: none; resize: none; max-height: 80px; line-height: 1.5;
+  }
+  #evntry-chat-input::placeholder { color: #555; }
+  #evntry-chat-send {
+    width: 34px; height: 34px; border-radius: 8px; background: #FF5C1A; border: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  #evntry-chat-send:hover { background: #e04d12; }
+  #evntry-chat-send svg { width: 16px; height: 16px; color: #fff; }
+  @media (max-width: 400px) {
+    #evntry-chat-panel { right: 12px; left: 12px; width: auto; bottom: 80px; }
+    #evntry-chat-bubble { right: 16px; bottom: 16px; }
+  }
+</style>
+
+<div id="evntry-chat-bubble" onclick="evntryChatToggle()" aria-label="Chat with Evntry">
+  <svg id="evntry-chat-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <svg id="evntry-chat-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</div>
+
+<div id="evntry-chat-panel">
+  <div id="evntry-chat-header">
+    <div class="dot"></div>
+    <span>Evntry</span>
+  </div>
+  <div id="evntry-chat-messages">
+    <div class="evntry-msg bot">Hey 👋 Got questions about Evntry? Ask me anything — pricing, features, how it works.</div>
+  </div>
+  <div id="evntry-chat-input-row">
+    <textarea id="evntry-chat-input" rows="1" placeholder="Ask something…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();evntryChatSend();}"></textarea>
+    <button id="evntry-chat-send" onclick="evntryChatSend()" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function() {
+  var CHAT_API = 'https://app.evntry.app/api/chat';
+  var panelOpen = false;
+
+  window.evntryChatToggle = function() {
+    panelOpen = !panelOpen;
+    document.getElementById('evntry-chat-panel').classList.toggle('open', panelOpen);
+    document.getElementById('evntry-chat-icon-open').style.display = panelOpen ? 'none' : '';
+    document.getElementById('evntry-chat-icon-close').style.display = panelOpen ? '' : 'none';
+    if (panelOpen) setTimeout(function(){ document.getElementById('evntry-chat-input').focus(); }, 220);
+  };
+
+  window.evntryChatSend = function() {
+    var input = document.getElementById('evntry-chat-input');
+    var msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    input.style.height = '';
+
+    var msgs = document.getElementById('evntry-chat-messages');
+
+    var userBubble = document.createElement('div');
+    userBubble.className = 'evntry-msg user';
+    userBubble.textContent = msg;
+    msgs.appendChild(userBubble);
+
+    var typing = document.createElement('div');
+    typing.className = 'evntry-msg bot typing';
+    typing.textContent = 'Thinking…';
+    msgs.appendChild(typing);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    fetch(CHAT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      typing.className = 'evntry-msg bot';
+      typing.textContent = data.reply || 'Something went wrong. Email hello@evntry.app for help.';
+      msgs.scrollTop = msgs.scrollHeight;
+    })
+    .catch(function() {
+      typing.className = 'evntry-msg bot';
+      typing.textContent = 'Couldn\'t connect. Email hello@evntry.app and we\'ll help you out.';
+      msgs.scrollTop = msgs.scrollHeight;
+    });
+  };
+})();
+</script>
 </body>
 </html>
