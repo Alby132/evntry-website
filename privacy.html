@@ -346,35 +346,47 @@
 <script>
 (function() {
   var CHAT_API = 'https://app.evntry.app/api/chat';
-  var panelOpen = false;
+  var PANEL_OPEN_DELAY = 220; // matches CSS transition duration
+  var MSG_CAP = 100;          // prevent unbounded DOM growth
+  var sending = false;
+
+  // Cache DOM refs once — avoids repeated getElementById lookups
+  var panelEl, msgsEl, inputEl, iconOpenEl, iconCloseEl;
+  document.addEventListener('DOMContentLoaded', function() {
+    panelEl    = document.getElementById('evntry-chat-panel');
+    msgsEl     = document.getElementById('evntry-chat-messages');
+    inputEl    = document.getElementById('evntry-chat-input');
+    iconOpenEl = document.getElementById('evntry-chat-icon-open');
+    iconCloseEl= document.getElementById('evntry-chat-icon-close');
+  });
 
   window.evntryChatToggle = function() {
-    panelOpen = !panelOpen;
-    document.getElementById('evntry-chat-panel').classList.toggle('open', panelOpen);
-    document.getElementById('evntry-chat-icon-open').style.display = panelOpen ? 'none' : '';
-    document.getElementById('evntry-chat-icon-close').style.display = panelOpen ? '' : 'none';
-    if (panelOpen) setTimeout(function(){ document.getElementById('evntry-chat-input').focus(); }, 220);
+    var isOpen = panelEl.classList.toggle('open');
+    iconOpenEl.style.display  = isOpen ? 'none' : '';
+    iconCloseEl.style.display = isOpen ? '' : 'none';
+    if (isOpen) setTimeout(function(){ inputEl.focus(); }, PANEL_OPEN_DELAY);
   };
 
   window.evntryChatSend = function() {
-    var input = document.getElementById('evntry-chat-input');
-    var msg = input.value.trim();
+    if (sending) return;
+    var msg = inputEl.value.trim();
     if (!msg) return;
-    input.value = '';
-    input.style.height = '';
+    sending = true;
+    inputEl.value = '';
 
-    var msgs = document.getElementById('evntry-chat-messages');
+    // Trim oldest messages if cap reached
+    while (msgsEl.children.length >= MSG_CAP) msgsEl.removeChild(msgsEl.firstChild);
 
     var userBubble = document.createElement('div');
     userBubble.className = 'evntry-msg user';
     userBubble.textContent = msg;
-    msgs.appendChild(userBubble);
+    msgsEl.appendChild(userBubble);
 
     var typing = document.createElement('div');
     typing.className = 'evntry-msg bot typing';
     typing.textContent = 'Thinking…';
-    msgs.appendChild(typing);
-    msgs.scrollTop = msgs.scrollHeight;
+    msgsEl.appendChild(typing);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
 
     fetch(CHAT_API, {
       method: 'POST',
@@ -385,13 +397,14 @@
     .then(function(data) {
       typing.className = 'evntry-msg bot';
       typing.textContent = data.reply || 'Something went wrong. Email hello@evntry.app for help.';
-      msgs.scrollTop = msgs.scrollHeight;
+      msgsEl.scrollTop = msgsEl.scrollHeight;
     })
     .catch(function() {
       typing.className = 'evntry-msg bot';
-      typing.textContent = 'Couldn\'t connect. Email hello@evntry.app and we\'ll help you out.';
-      msgs.scrollTop = msgs.scrollHeight;
-    });
+      typing.textContent = "Couldn't connect. Email hello@evntry.app and we'll help you out.";
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    })
+    .finally(function() { sending = false; });
   };
 })();
 </script>
