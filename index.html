@@ -270,6 +270,72 @@
 
   .divider { height: 1px; background: var(--border); }
 
+  /* Feature strip */
+  .feature-strip {
+    padding: 0 6vw;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+  .feature-strip-item {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .feature-strip-item::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* Social proof toast */
+  .sp-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 24px;
+    z-index: 200;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 270px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.55);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .sp-toast.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+  .sp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(74,222,128,0.5);
+  }
+  .sp-text { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .sp-text strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+
   section { padding: 100px 6vw; }
 
   h2 {
@@ -637,7 +703,14 @@
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="feature-strip">
+  <span class="feature-strip-item">Zero fees for fans</span>
+  <span class="feature-strip-item">QR door scanning</span>
+  <span class="feature-strip-item">Set up in 5 minutes</span>
+  <span class="feature-strip-item">Your attendee data, always</span>
+  <span class="feature-strip-item">No lock-in contracts</span>
+  <span class="feature-strip-item">Musician profiles</span>
+</div>
 
 <section>
   <p class="eyebrow">The problem</p>
@@ -797,6 +870,14 @@
   <p>© 2026 Evntry &nbsp;·&nbsp; <a href="about.html">About</a> &nbsp;·&nbsp; <a href="fans.html">For fans</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="musicians.html">For musicians</a> &nbsp;·&nbsp; <a href="https://instagram.com/evntry.app" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a></p>
 </footer>
 
+<div class="sp-toast hidden" id="sp-toast">
+  <div class="sp-dot"></div>
+  <div class="sp-text">
+    <strong id="sp-venue">A bar in Zagreb</strong>
+    <span id="sp-action">just requested access</span>
+  </div>
+</div>
+
 <script>
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
@@ -819,6 +900,34 @@
       form.reset();
     });
   }
+
+  // Social proof toast
+  (function() {
+    var entries = [
+      { venue: 'A bar in Zagreb', action: 'just requested access' },
+      { venue: 'A live music venue in Split', action: 'joined the waitlist' },
+      { venue: 'A club in Rijeka', action: 'just requested access' },
+      { venue: 'An event organizer in Osijek', action: 'joined the waitlist' },
+      { venue: 'A venue in Dubrovnik', action: 'just requested access' },
+      { venue: 'A bar in Ljubljana', action: 'joined the waitlist' },
+    ];
+    var idx = 0;
+    var toast = document.getElementById('sp-toast');
+    var venueEl = document.getElementById('sp-venue');
+    var actionEl = document.getElementById('sp-action');
+
+    function showNext() {
+      var entry = entries[idx % entries.length];
+      venueEl.textContent = entry.venue;
+      actionEl.textContent = entry.action;
+      toast.classList.remove('hidden');
+      idx++;
+      setTimeout(function() { toast.classList.add('hidden'); }, 4500);
+    }
+
+    setTimeout(showNext, 3500);
+    setInterval(showNext, 13000);
+  })();
 </script>
 </body>
 </html>
