@@ -97,10 +97,11 @@
 
   .hero {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 140px 6vw 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    padding: 120px 6vw 80px;
     position: relative;
     overflow: hidden;
   }
@@ -110,10 +111,10 @@
     position: absolute;
     width: 900px;
     height: 900px;
-    background: radial-gradient(circle, rgba(255,92,26,0.12) 0%, transparent 65%);
-    top: 45%;
-    right: -60px;
-    transform: translateY(-50%);
+    background: radial-gradient(circle, rgba(255,92,26,0.10) 0%, transparent 65%);
+    top: 50%;
+    right: 10%;
+    transform: translate(50%, -50%);
     pointer-events: none;
   }
   .hero::after {
@@ -154,12 +155,11 @@
   h1 {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: clamp(68px, 11vw, 130px);
+    font-size: clamp(56px, 8vw, 110px);
     line-height: 0.90;
     letter-spacing: -0.01em;
     text-transform: uppercase;
     color: var(--text);
-    max-width: 860px;
     margin-bottom: 36px;
   }
   h1 em {
@@ -179,8 +179,6 @@
   .form-wrap { max-width: 480px; }
 
   .app-preview {
-    margin: 64px auto 0;
-    max-width: 480px;
     width: 100%;
     position: relative;
   }
@@ -548,7 +546,7 @@
     nav { padding: 0 5vw; height: 56px; }
 
     /* Hero */
-    .hero { padding: 100px 5vw 72px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 5vw 64px; gap: 48px; }
     .hero-sub { font-size: 17px; }
 
     /* Sections */
@@ -605,30 +603,32 @@
 </div>
 
 <section class="hero">
-  <p class="eyebrow">For venue owners &amp; event organizers</p>
-  <h1>Sell tickets.<br>Not your <em>time.</em></h1>
-  <p class="hero-sub">
-    Set up an event in under 5 minutes. Sell tickets with <strong>zero fees for your fans.</strong> Scan the door from your phone. That's it.
-  </p>
+  <div class="hero-content">
+    <p class="eyebrow">For venue owners &amp; event organizers</p>
+    <h1>Sell tickets.<br>Not your <em>time.</em></h1>
+    <p class="hero-sub">
+      Set up an event in under 5 minutes. Sell tickets with <strong>zero fees for your fans.</strong> Scan the door from your phone. That's it.
+    </p>
 
-  <div class="form-wrap">
-    <form name="venue-access" onsubmit="submitForm(event, 's1')">
-      <div class="email-row">
-        <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
-        <button type="submit" class="btn-primary">Request access</button>
+    <div class="form-wrap">
+      <form name="venue-access" onsubmit="submitForm(event, 's1')">
+        <div class="email-row">
+          <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
+          <button type="submit" class="btn-primary">Request access</button>
+        </div>
+        <p class="form-note">For venue owners only. No spam, ever.</p>
+        <p class="success-msg" id="s1">✓ You're on the list. We'll reach out shortly.</p>
+      </form>
+    </div>
+
+    <div class="trust-row">
+      <span class="trust-label">Built for</span>
+      <div class="trust-pills">
+        <span class="trust-pill">Bars</span>
+        <span class="trust-pill">Live music venues</span>
+        <span class="trust-pill">Clubs</span>
+        <span class="trust-pill">Event organizers</span>
       </div>
-      <p class="form-note">For venue owners only. No spam, ever.</p>
-      <p class="success-msg" id="s1">✓ You're on the list. We'll reach out shortly.</p>
-    </form>
-  </div>
-
-  <div class="trust-row">
-    <span class="trust-label">Built for</span>
-    <div class="trust-pills">
-      <span class="trust-pill">Bars</span>
-      <span class="trust-pill">Live music venues</span>
-      <span class="trust-pill">Clubs</span>
-      <span class="trust-pill">Event organizers</span>
     </div>
   </div>
 
