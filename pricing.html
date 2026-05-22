@@ -701,9 +701,7 @@
   <h2>Start on <em>Doors.</em><br>Scale when ready.</h2>
   <p class="section-sub">Evntry is in early access. Leave your email and we'll get you set up within a few days.</p>
   <div class="form-wrap">
-    <form name="pricing-access" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's1')">
-      <input type="hidden" name="form-name" value="pricing-access">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="pricing-access" onsubmit="submitForm(event, 's1')">
       <div class="email-row">
         <input type="email" name="email" placeholder="Your work email" required>
         <button type="submit" class="btn-primary">Request access</button>
@@ -721,14 +719,14 @@
 
 <script>
   function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
-  function submitNetlify(e, successId) {
+  function submitForm(e, successId) {
     e.preventDefault();
     const form = e.target;
-    fetch('/', {
+    fetch('https://formspree.io/f/mzdwgbow', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    }).then(() => {
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(res => {
       document.getElementById(successId).style.display = 'block';
       form.reset();
     }).catch(() => {

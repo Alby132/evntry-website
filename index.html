@@ -579,9 +579,7 @@
   </p>
 
   <div class="form-wrap">
-    <form name="venue-access" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's1')">
-      <input type="hidden" name="form-name" value="venue-access">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="venue-access" onsubmit="submitForm(event, 's1')">
       <div class="email-row">
         <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
         <button type="submit" class="btn-primary">Request access</button>
@@ -746,9 +744,7 @@
   <h2>Ready to stop<br>losing <em>time?</em></h2>
   <p class="section-sub">Evntry is rolling out to a select group of venues first. Get in early and help shape the product.</p>
   <div class="form-wrap">
-    <form name="venue-access-bottom" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's2')">
-      <input type="hidden" name="form-name" value="venue-access-bottom">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="venue-access-bottom" onsubmit="submitForm(event, 's2')">
       <div class="email-row">
         <input type="email" name="email" placeholder="Your work email" required>
         <button type="submit" class="btn-primary">Request access</button>
@@ -771,14 +767,14 @@
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
   }
-  function submitNetlify(e, successId) {
+  function submitForm(e, successId) {
     e.preventDefault();
     const form = e.target;
-    fetch('/', {
+    fetch('https://formspree.io/f/mzdwgbow', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    }).then(() => {
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(res => {
       document.getElementById(successId).style.display = 'block';
       form.reset();
     }).catch(() => {

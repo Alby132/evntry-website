@@ -446,9 +446,7 @@
   </p>
 
   <div class="form-wrap">
-    <form name="fan-signup" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's1')">
-      <input type="hidden" name="form-name" value="fan-signup">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="fan-signup" onsubmit="submitForm(event, 's1')">
       <div class="email-row">
         <input type="email" name="email" id="hero-email" placeholder="Your email address" required>
         <button type="submit" class="btn-primary">Get notified</button>
@@ -547,9 +545,7 @@
   <p class="section-sub">Leave your email and we'll let you know the moment Evntry is live for fans.</p>
 
   <div class="form-wrap">
-    <form name="fan-signup-bottom" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 's2')">
-      <input type="hidden" name="form-name" value="fan-signup-bottom">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="fan-signup-bottom" onsubmit="submitForm(event, 's2')">
       <div class="email-row">
         <input type="email" name="email" placeholder="Your email address" required>
         <button type="submit" class="btn-primary">Get notified</button>
@@ -568,14 +564,14 @@
 <script>
   function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
   function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
-  function submitNetlify(e, successId) {
+  function submitForm(e, successId) {
     e.preventDefault();
     const form = e.target;
-    fetch('/', {
+    fetch('https://formspree.io/f/mzdwgbow', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    }).then(() => {
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(res => {
       document.getElementById(successId).style.display = 'block';
       form.reset();
     }).catch(() => {

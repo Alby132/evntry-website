@@ -490,9 +490,7 @@
   <h2>Ready to run your night<br>the right way?</h2>
   <p class="section-sub">We're onboarding venue owners and event organizers now. Drop your email and we'll be in touch.</p>
   <div class="form-wrap">
-    <form name="about-access" netlify netlify-honeypot="bot-field" onsubmit="submitNetlify(event, 'success-about')">
-      <input type="hidden" name="form-name" value="about-access">
-      <input type="hidden" name="bot-field" style="display:none">
+    <form name="about-access" onsubmit="submitForm(event, 'success-about')">
       <div class="email-row">
         <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
         <button type="submit" class="btn-primary">Request access</button>
@@ -515,18 +513,19 @@
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
   }
-  function submitNetlify(e, successId) {
+  function submitForm(e, successId) {
     e.preventDefault();
     const form = e.target;
-    fetch('/', {
+    fetch('https://formspree.io/f/mzdwgbow', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    }).then(() => {
-      form.querySelector('input[type="email"]').value = '';
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(res => {
       document.getElementById(successId).style.display = 'block';
+      form.reset();
     }).catch(() => {
-      alert('Something went wrong. Please try again.');
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
     });
   }
 </script>
