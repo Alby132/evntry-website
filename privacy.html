@@ -78,6 +78,32 @@
   }
   .logo span { color: var(--accent); }
 
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-link { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+  .nav-link:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 14px;
+    padding: 9px 20px; border-radius: 6px; border: none; cursor: pointer;
+    transition: opacity 0.15s; letter-spacing: 0.01em; text-decoration: none;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.2s; }
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: var(--bg); flex-direction: column; align-items: center;
+    justify-content: center; gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; color: var(--text); letter-spacing: 0.04em; }
+  .mob-cta { background: var(--accent) !important; color: #fff !important; padding: 14px 36px; border-radius: 8px; font-size: 24px !important; }
+
+  @media (max-width: 680px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+
   .content {
     max-width: 720px;
     margin: 0 auto;
@@ -171,7 +197,26 @@
 
 <nav>
   <a href="index.html" class="logo">EVN<span>T</span>RY</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">For venues</a>
+    <a href="pricing.html" class="nav-link">Pricing</a>
+    <a href="fans.html" class="nav-link">For fans</a>
+    <a href="musicians.html" class="nav-link">For musicians</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="https://app.evntry.app" class="nav-cta">Get started</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">For venues</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="fans.html">For fans</a>
+  <a href="musicians.html">For musicians</a>
+  <a href="about.html">About</a>
+  <a href="https://app.evntry.app" class="mob-cta">Get started</a>
+</div>
 
 <div class="content">
   <h1 class="page-title">Privacy<br>Policy</h1>
@@ -407,6 +452,11 @@
     .finally(function() { sending = false; });
   };
 })();
+</script>
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
 </script>
 </body>
 </html>
