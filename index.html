@@ -537,6 +537,63 @@
   .check { color: #4ade80; }
   .cross { color: #3a3a38; }
 
+  /* Up and running */
+  .start-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .start-card {
+    background: var(--surface);
+    padding: 40px 32px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .start-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 100px;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.07;
+    letter-spacing: -0.02em;
+    pointer-events: none;
+    user-select: none;
+  }
+  .start-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    margin-bottom: 14px;
+    margin-top: 40px;
+    line-height: 1;
+  }
+  .start-card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .start-step {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
   .cta-band {
     background: var(--surface);
     border-top: 1px solid var(--border);
@@ -637,6 +694,9 @@
 
     /* Diff cards — single column */
     .diff-grid { grid-template-columns: 1fr; }
+
+    /* Start grid — single column */
+    .start-grid { grid-template-columns: 1fr; }
 
     /* Compare table: smaller text */
     .compare-row { font-size: 13px; padding: 12px 16px; gap: 10px; }
@@ -893,6 +953,32 @@
 
   <div style="margin-top: 32px; text-align: center;">
     <a href="pricing.html" style="font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">See full pricing →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Get started</p>
+  <h2>Up and running<br>in <em>5 minutes.</em></h2>
+  <p class="section-sub">No training. No onboarding call. No credit card to start. Just create an account and go.</p>
+
+  <div class="start-grid">
+    <div class="start-card" data-num="1">
+      <span class="start-step">Step 1</span>
+      <h3>Request access</h3>
+      <p>Leave your email below. We'll get you set up within a few days — a real person reviews every application so we can help you hit the ground running.</p>
+    </div>
+    <div class="start-card" data-num="2">
+      <span class="start-step">Step 2</span>
+      <h3>Create your first event</h3>
+      <p>Add a name, date, ticket price, and capacity. Connect your Stripe account to receive payments. Your shareable ticket link is ready in under 3 minutes.</p>
+    </div>
+    <div class="start-card" data-num="3">
+      <span class="start-step">Step 3</span>
+      <h3>Share and start selling</h3>
+      <p>Post your link on Instagram, WhatsApp, or your website. Fans buy in seconds — no app, no account needed. Money lands in your Stripe account directly.</p>
+    </div>
   </div>
 </section>
 
