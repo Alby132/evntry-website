@@ -15,7 +15,7 @@
 <meta name="twitter:description" content="Simple ticketing for independent venue owners. Set up an event in minutes, sell tickets with zero fees to fans, and scan the door from your phone.">
 <meta name="twitter:image" content="https://evntry.app/og-image.png">
 <title>Evntry — Ticketing for local venues</title>
-<link rel="preload" as="image" href="app-screenshot-card.png?v=4">
+<link rel="preload" as="image" href="app-screenshot-card.png?v=5">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,9 +99,9 @@
   .hero {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
-    gap: 60px;
+    gap: 48px;
     padding: 120px 6vw 80px;
     position: relative;
     overflow: hidden;
@@ -181,6 +181,7 @@
 
   .app-preview {
     width: 100%;
+    max-width: 440px;
     position: relative;
   }
   .app-preview::before {
@@ -388,25 +389,28 @@
     line-height: 1.65;
   }
 
-  .steps { display: flex; flex-direction: column; max-width: 680px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 48px;
+  }
 
   .step {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 24px;
-    padding: 36px 0;
-    border-bottom: 1px solid var(--border);
-    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
   }
-  .step:last-child { border-bottom: none; }
+  .step:first-child { border-radius: 10px 0 0 10px; }
+  .step:last-child  { border-radius: 0 10px 10px 0; }
 
   .step-num {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: 52px;
+    font-size: 36px;
     line-height: 1;
-    color: var(--faint);
-    padding-top: 4px;
+    color: var(--accent);
+    margin-bottom: 16px;
   }
 
   .step-tag {
@@ -676,6 +680,11 @@
     /* Diff cards — single column */
     .diff-grid { grid-template-columns: 1fr; }
 
+    /* How it works — stack */
+    .steps { grid-template-columns: 1fr; }
+    .step:first-child { border-radius: 10px 10px 0 0; }
+    .step:last-child  { border-radius: 0 0 10px 10px; }
+
     /* Payout steps — stack */
     .payout-grid { grid-template-columns: 1fr; }
     .payout-step:first-child { border-radius: 10px 10px 0 0; }
@@ -712,17 +721,29 @@
   .payout-step h3 { font-size:16px; font-weight:600; color:var(--text); margin-bottom:10px; }
   .payout-step p  { font-size:14px; color:var(--muted); line-height:1.65; }
 
-  /* FAQ */
+  /* FAQ accordion */
   .faq-list { max-width: 680px; margin: 0 auto; }
-  .faq-item { border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 0; }
   .faq-item:first-child { border-top: 1px solid var(--border); }
   .faq-q {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700; font-size: 22px;
     text-transform: uppercase; letter-spacing: 0.02em;
-    color: var(--text); margin-bottom: 10px; line-height: 1.1;
+    color: var(--text); line-height: 1.1;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; padding: 24px 0; margin: 0; user-select: none;
   }
-  .faq-a { font-size: 15px; color: var(--muted); line-height: 1.65; }
+  .faq-q::after {
+    content: '+';
+    font-size: 22px; font-weight: 400; font-family: 'Figtree', sans-serif;
+    color: var(--muted); flex-shrink: 0; margin-left: 16px;
+  }
+  .faq-item.open .faq-q::after { content: '−'; }
+  .faq-a {
+    display: none; font-size: 15px; color: var(--muted);
+    line-height: 1.65; padding-bottom: 24px;
+  }
+  .faq-item.open .faq-a { display: block; }
   .faq-a strong { color: var(--text); font-weight: 500; }
 
   /* Sticky CTA bar */
@@ -874,7 +895,7 @@
     <div class="form-wrap">
       <div class="hero-cta-row">
         <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Start selling tickets →</a>
-        <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 15-min call</a>
+        <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 30-min call</a>
       </div>
       <p class="form-note">Free to start. No credit card needed. &nbsp;·&nbsp; <a href="https://app.evntry.app/e/jazz-trio-night-aqynwD" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,92,26,0.35);padding-bottom:1px;">See what a ticket page looks like →</a></p>
       <p class="hero-price-hint">€49/mo to go unlimited &nbsp;·&nbsp; No fees ever for your fans</p>
@@ -892,7 +913,7 @@
   </div>
 
   <div class="app-preview">
-    <img src="app-screenshot-card.png?v=4" alt="Evntry event creation form — set up an event in minutes" class="app-preview-img" fetchpriority="high">
+    <img src="app-screenshot-card.png?v=5" alt="Evntry event creation form — set up an event in minutes" class="app-preview-img" fetchpriority="high">
   </div>
 </section>
 
@@ -1004,42 +1025,6 @@
     </div>
   </div>
 
-  <div class="compare">
-    <div class="compare-row compare-header">
-      <span></span>
-      <span class="ev">Evntry</span>
-      <span>Eventbrite</span>
-    </div>
-    <div class="compare-row">
-      <span class="compare-feature">Fees added for fans</span>
-      <span class="ev-val check">None</span>
-      <span class="cross">Up to 10–15% per ticket</span>
-    </div>
-    <div class="compare-row">
-      <span class="compare-feature">Event setup time</span>
-      <span class="ev-val check">Under 5 min</span>
-      <span class="cross">Up to 30 minutes</span>
-    </div>
-    <div class="compare-row">
-      <span class="compare-feature">Runs on your phone</span>
-      <span class="ev-val check">Yes</span>
-      <span class="cross">Web-first</span>
-    </div>
-    <div class="compare-row">
-      <span class="compare-feature">Contracts required</span>
-      <span class="ev-val check">No</span>
-      <span class="cross">Sometimes</span>
-    </div>
-    <div class="compare-row">
-      <span class="compare-feature">Fan subscription layer</span>
-      <span class="ev-val check">Included</span>
-      <span class="cross">Not available</span>
-    </div>
-  </div>
-
-  <div style="margin-top: 32px; text-align: center;">
-    <a href="pricing.html" style="font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">See full pricing →</a>
-  </div>
 </section>
 
 <div class="divider"></div>
@@ -1091,6 +1076,43 @@
       <p>Payouts land in your bank account on Stripe's standard schedule — typically within 2–7 days of each sale.</p>
     </div>
   </div>
+
+  <div class="compare" style="margin-top: 52px;">
+    <div class="compare-row compare-header">
+      <span></span>
+      <span class="ev">Evntry</span>
+      <span>Eventbrite</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Fees added for fans</span>
+      <span class="ev-val check">None</span>
+      <span class="cross">Up to 10–15% per ticket</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Event setup time</span>
+      <span class="ev-val check">Under 5 min</span>
+      <span class="cross">Up to 30 minutes</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Runs on your phone</span>
+      <span class="ev-val check">Yes</span>
+      <span class="cross">Web-first</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Contracts required</span>
+      <span class="ev-val check">No</span>
+      <span class="cross">Sometimes</span>
+    </div>
+    <div class="compare-row">
+      <span class="compare-feature">Fan subscription layer</span>
+      <span class="ev-val check">Included</span>
+      <span class="cross">Not available</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 28px; text-align: center;">
+    <a href="pricing.html" style="font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">See full pricing →</a>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1132,7 +1154,7 @@
   <div class="form-wrap">
     <div class="hero-cta-row" style="justify-content:center;">
       <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Create free account →</a>
-      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 15-min call</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 30-min call</a>
     </div>
     <p class="form-note" style="text-align:center;margin-top:14px;">No credit card required. Free forever on the Doors plan.</p>
   </div>
@@ -1151,6 +1173,13 @@
   function closeMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
   }
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      q.closest('.faq-item').classList.toggle('open');
+    });
+  });
+
   // Sticky CTA — show after hero leaves viewport
   (function() {
     var hero = document.querySelector('.hero');
