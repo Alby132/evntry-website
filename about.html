@@ -359,6 +359,20 @@
     white-space: nowrap;
   }
   .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--text);
+    font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 15px;
+    padding: 13px 22px; border-radius: 6px;
+    border: 1px solid var(--border); cursor: pointer;
+    white-space: nowrap; text-decoration: none;
+    transition: border-color 0.15s;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  .hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: center; }
+
   .form-note {
     font-size: 13px;
     color: var(--muted);
@@ -537,18 +551,15 @@
 
 <!-- CTA BAND -->
 <section class="cta-band">
-  <p class="eyebrow">Get early access</p>
+  <p class="eyebrow">Get started</p>
   <h2>Ready to run your night<br>the right way?</h2>
-  <p class="section-sub">We're onboarding venue owners and event organizers now. Drop your email and we'll be in touch.</p>
+  <p class="section-sub">Create your free account in seconds. No contracts, no approval process.</p>
   <div class="form-wrap">
-    <form name="about-access" onsubmit="submitForm(event, 'success-about')">
-      <div class="email-row">
-        <input type="email" name="email" id="hero-email" placeholder="Your work email" required>
-        <button type="submit" class="btn-primary">Request access</button>
-      </div>
-      <p class="form-note">For venue owners only. No spam, ever.</p>
-      <p class="success-msg" id="success-about">✓ You're on the list. We'll reach out shortly.</p>
-    </form>
+    <div class="hero-cta-row">
+      <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Start selling tickets →</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 15-min call</a>
+    </div>
+    <p class="form-note" style="text-align:center;margin-top:14px;">Free to start. No credit card needed.</p>
   </div>
 </section>
 
