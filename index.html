@@ -248,6 +248,12 @@
   }
   .btn-primary:hover { opacity: 0.85; }
 
+  .hero-price-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    opacity: 0.75;
+  }
   .form-note {
     margin-top: 12px;
     font-size: 13px;
@@ -314,40 +320,6 @@
     flex-shrink: 0;
   }
 
-  /* Social proof toast */
-  .sp-toast {
-    position: fixed;
-    bottom: 28px;
-    left: 24px;
-    z-index: 200;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    max-width: 270px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.55);
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .sp-toast.hidden {
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
-  }
-  .sp-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #4ade80;
-    flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(74,222,128,0.5);
-  }
-  .sp-text { font-size: 13px; color: var(--muted); line-height: 1.45; }
-  .sp-text strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
 
   section { padding: 100px 6vw; }
 
@@ -829,6 +801,7 @@
           <button type="submit" class="btn-primary">Request access</button>
         </div>
         <p class="form-note">For venue owners only. No spam, ever. &nbsp;·&nbsp; <a href="https://app.evntry.app/e/jazz-trio-night-aqynwD" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,92,26,0.35);padding-bottom:1px;">See what a ticket page looks like →</a></p>
+        <p class="hero-price-hint">Free to start &nbsp;·&nbsp; €49/mo to go unlimited &nbsp;·&nbsp; No fees ever for your fans</p>
         <p class="success-msg" id="s1">✓ You're on the list. We'll reach out shortly.</p>
       </form>
     </div>
@@ -961,17 +934,17 @@
     <div class="compare-row compare-header">
       <span></span>
       <span class="ev">Evntry</span>
-      <span>Others</span>
+      <span>Eventbrite</span>
     </div>
     <div class="compare-row">
       <span class="compare-feature">Fees added for fans</span>
       <span class="ev-val check">None</span>
-      <span class="cross">Booking fee on every ticket</span>
+      <span class="cross">Up to 10–15% per ticket</span>
     </div>
     <div class="compare-row">
       <span class="compare-feature">Event setup time</span>
       <span class="ev-val check">Under 5 min</span>
-      <span class="cross">Much longer</span>
+      <span class="cross">Up to 30 minutes</span>
     </div>
     <div class="compare-row">
       <span class="compare-feature">Runs on your phone</span>
@@ -1042,13 +1015,6 @@
   <p>© 2026 Evntry &nbsp;·&nbsp; <a href="about.html">About</a> &nbsp;·&nbsp; <a href="pricing.html">Pricing</a> &nbsp;·&nbsp; <a href="fans.html">For fans</a> &nbsp;·&nbsp; <a href="musicians.html">For musicians</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="https://instagram.com/evntry.app" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a></p>
 </footer>
 
-<div class="sp-toast hidden" id="sp-toast">
-  <div class="sp-dot"></div>
-  <div class="sp-text">
-    <strong id="sp-venue">A bar in Zagreb</strong>
-    <span id="sp-action">just requested access</span>
-  </div>
-</div>
 
 <script>
   function toggleMenu() {
@@ -1073,33 +1039,6 @@
     });
   }
 
-  // Social proof toast
-  (function() {
-    var entries = [
-      { venue: 'A bar in Zagreb', action: 'just requested access' },
-      { venue: 'A live music venue in Split', action: 'joined the waitlist' },
-      { venue: 'A club in Rijeka', action: 'just requested access' },
-      { venue: 'An event organizer in Osijek', action: 'joined the waitlist' },
-      { venue: 'A venue in Dubrovnik', action: 'just requested access' },
-      { venue: 'A bar in Ljubljana', action: 'joined the waitlist' },
-    ];
-    var idx = 0;
-    var toast = document.getElementById('sp-toast');
-    var venueEl = document.getElementById('sp-venue');
-    var actionEl = document.getElementById('sp-action');
-
-    function showNext() {
-      var entry = entries[idx % entries.length];
-      venueEl.textContent = entry.venue;
-      actionEl.textContent = entry.action;
-      toast.classList.remove('hidden');
-      idx++;
-      setTimeout(function() { toast.classList.add('hidden'); }, 4500);
-    }
-
-    setTimeout(showNext, 3500);
-    setInterval(showNext, 13000);
-  })();
 </script>
 
 <!-- Evntry AI Chat Widget -->

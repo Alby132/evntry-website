@@ -512,7 +512,7 @@
     <a href="fans.html" class="nav-link">For fans</a>
     <a href="musicians.html" class="nav-link active">For musicians</a>
     <a href="about.html" class="nav-link">About</a>
-    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Join the list</button>
+    <a href="https://app.evntry.app/register" class="nav-cta" style="text-decoration:none;">Create profile</a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -524,7 +524,7 @@
   <a href="fans.html">For fans</a>
   <a href="musicians.html">For musicians</a>
   <a href="about.html">About</a>
-  <a href="#hero-email" class="mob-cta" onclick="closeMenu()">Join the list</a>
+  <a href="https://app.evntry.app/register" class="mob-cta" onclick="closeMenu()">Create profile</a>
 </div>
 
 <section class="hero">
@@ -536,14 +536,8 @@
   </p>
 
   <div class="form-wrap">
-    <form name="musician-signup" onsubmit="submitForm(event, 's1')">
-      <div class="email-row">
-        <input type="email" name="email" id="hero-email" placeholder="Your email address" required>
-        <button type="submit" class="btn-primary">Get early access</button>
-      </div>
-      <p class="form-note">For musicians, bands, DJs, solo acts. No spam.</p>
-      <p class="success-msg" id="s1">✓ You're on the list. We'll be in touch.</p>
-    </form>
+    <a href="https://app.evntry.app/register" class="btn-primary" style="display:inline-block;text-decoration:none;padding:14px 28px;">Create your free profile →</a>
+    <p class="form-note">Free forever for musicians. No credit card needed.</p>
   </div>
 </section>
 
