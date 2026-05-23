@@ -462,7 +462,7 @@
     <a href="fans.html" class="nav-link active">For fans</a>
     <a href="musicians.html" class="nav-link">For musicians</a>
     <a href="about.html" class="nav-link">About</a>
-    <button class="nav-cta" onclick="document.getElementById('hero-email').focus()">Join the list</button>
+    <a href="https://app.evntry.app" class="nav-cta" style="text-decoration:none;">Browse events</a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -474,7 +474,7 @@
   <a href="fans.html">For fans</a>
   <a href="musicians.html">For musicians</a>
   <a href="about.html">About</a>
-  <a href="#hero-email" class="mob-cta" onclick="closeMenu()">Join the list</a>
+  <a href="https://app.evntry.app" class="mob-cta" onclick="closeMenu()">Browse events</a>
 </div>
 
 <section class="hero">
@@ -485,14 +485,8 @@
   </p>
 
   <div class="form-wrap">
-    <form name="fan-signup" onsubmit="submitForm(event, 's1')">
-      <div class="email-row">
-        <input type="email" name="email" id="hero-email" placeholder="Your email address" required>
-        <button type="submit" class="btn-primary">Get notified</button>
-      </div>
-      <p class="form-note">Be first to know when Evntry launches for fans.</p>
-      <p class="success-msg" id="s1">✓ You're on the list. We'll be in touch.</p>
-    </form>
+    <a href="https://app.evntry.app" class="btn-primary" style="display:inline-block;text-decoration:none;padding:14px 28px;">Browse events near you →</a>
+    <p class="form-note">Free for fans. No account needed to buy a ticket.</p>
   </div>
 </section>
 
@@ -579,19 +573,13 @@
 </section>
 
 <section class="cta-band">
-  <p class="eyebrow">Join the list</p>
+  <p class="eyebrow">Get your ticket</p>
   <h2>Don't miss<br>another <em>sold-out</em><br>night.</h2>
-  <p class="section-sub">Leave your email and we'll let you know the moment Evntry is live for fans.</p>
+  <p class="section-sub">Browse live music, bar nights, and club events near you. Buy a ticket in seconds — no account needed.</p>
 
-  <div class="form-wrap">
-    <form name="fan-signup-bottom" onsubmit="submitForm(event, 's2')">
-      <div class="email-row">
-        <input type="email" name="email" placeholder="Your email address" required>
-        <button type="submit" class="btn-primary">Get notified</button>
-      </div>
-      <p class="form-note">No spam. Just a single email when we launch.</p>
-      <p class="success-msg" id="s2">✓ You're on the list. See you at the show.</p>
-    </form>
+  <div class="form-wrap" style="text-align:center;">
+    <a href="https://app.evntry.app" class="btn-primary" style="display:inline-block;text-decoration:none;padding:14px 28px;">Find events near you →</a>
+    <p class="form-note" style="text-align:center;">Free for fans. No account needed to buy a ticket.</p>
   </div>
 </section>
 

@@ -691,6 +691,39 @@
     /* Footer: stack */
     footer { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
+
+  /* FAQ */
+  .faq-list { max-width: 680px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+  .faq-q {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 22px;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    color: var(--text); margin-bottom: 10px; line-height: 1.1;
+  }
+  .faq-a { font-size: 15px; color: var(--muted); line-height: 1.65; }
+  .faq-a strong { color: var(--text); font-weight: 500; }
+
+  /* Sticky CTA bar */
+  #sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 10px 6vw;
+    display: flex; align-items: center; justify-content: space-between;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  #sticky-cta.visible { transform: translateY(0); }
+  #sticky-cta p { font-size: 14px; color: var(--muted); margin: 0; }
+  #sticky-cta .sticky-btn {
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 8px 20px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
+    text-decoration: none; display: inline-block;
+  }
+  @media (max-width: 680px) { #sticky-cta { display: none; } }
 </style>
 <link rel="canonical" href="https://evntry.app/">
 <script type="application/ld+json">
@@ -994,6 +1027,38 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Questions</p>
+  <h2>Common<br><em>questions.</em></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Do fans pay extra fees?</div>
+      <div class="faq-a">No. The price you set is exactly what fans pay at checkout. <strong>Evntry never adds booking fees on the fan side</strong> — no sticker shock, no drop-off at the last step.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly do I get paid?</div>
+      <div class="faq-a">Via your connected Stripe account. <strong>Payouts follow Stripe's schedule</strong> — typically 2–7 business days after each sale. No waiting for a monthly settlement from a platform.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is there a contract or minimum commitment?</div>
+      <div class="faq-a">No contract, no lock-in. <strong>Cancel anytime.</strong> The Doors plan is free forever — you only move to Headline if you decide it makes sense for your volume.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I own my attendee data?</div>
+      <div class="faq-a">Completely. Your attendee list — names, emails, purchase history — <strong>belongs to you and is exportable anytime.</strong> We never share it or use it for our own marketing.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need a credit card to get started?</div>
+      <div class="faq-a">No. The Doors plan is free with no card required. <strong>You only need a Stripe account to receive payments</strong> from ticket sales — Stripe's setup is free and takes about 10 minutes.</div>
+    </div>
+  </div>
+  <div style="margin-top:32px;text-align:center;">
+    <a href="pricing.html" style="font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">See full pricing &amp; FAQ →</a>
+  </div>
+</section>
+
 <section class="cta-band">
   <p class="eyebrow">Request access</p>
   <h2>Ready to stop<br>losing <em>time?</em></h2>
@@ -1039,7 +1104,22 @@
     });
   }
 
+  // Sticky CTA — show after hero leaves viewport
+  (function() {
+    var hero = document.querySelector('.hero');
+    var bar  = document.getElementById('sticky-cta');
+    if (!hero || !bar) return;
+    var obs = new IntersectionObserver(function(entries) {
+      bar.classList.toggle('visible', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    obs.observe(hero);
+  })();
 </script>
+
+<div id="sticky-cta">
+  <p>Ready to sell tickets without the fees?</p>
+  <a href="#hero-email" class="sticky-btn" onclick="document.getElementById('hero-email').focus();return false;">Request access →</a>
+</div>
 
 <!-- Evntry AI Chat Widget -->
 <style>
