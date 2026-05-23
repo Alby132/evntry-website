@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T78BQ748F8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-T78BQ748F8', {
-    'anonymize_ip': true,
-    'allow_google_signals': false,
-    'allow_ad_personalization_signals': false
-  });
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Find local live music events, club nights, and gigs near you. Buy tickets directly from venues — no hidden booking fees, ever.">
@@ -673,6 +661,30 @@
     #evntry-chat-panel { right: 12px; left: 12px; width: auto; bottom: 80px; }
     #evntry-chat-bubble { right: 16px; bottom: 16px; }
   }
+
+  /* Cookie consent banner */
+  #cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 10px 6vw;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-size: 13px; color: var(--muted);
+  }
+  #cookie-banner p { margin: 0; }
+  #cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  #cookie-accept {
+    background: var(--accent); color: #fff; border: none;
+    padding: 6px 14px; border-radius: 5px; font-size: 13px;
+    font-family: 'Figtree', sans-serif; font-weight: 600; cursor: pointer;
+  }
+  #cookie-decline {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--border); padding: 6px 14px; border-radius: 5px;
+    font-size: 13px; font-family: 'Figtree', sans-serif; cursor: pointer;
+  }
+  @media (max-width: 680px) {
+    #cookie-banner { flex-direction: column; align-items: flex-start; padding: 14px 5vw; }
+  }
 </style>
 
 <div id="evntry-chat-bubble" onclick="evntryChatToggle()" aria-label="Chat with Evntry">
@@ -759,6 +771,47 @@
     })
     .finally(function() { sending = false; });
   };
+})();
+</script>
+<!-- Cookie consent + GA4 -->
+<div id="cookie-banner">
+  <p>We use cookies to understand how visitors use our site.</p>
+  <div id="cookie-actions">
+    <button id="cookie-accept">Accept</button>
+    <button id="cookie-decline">Decline</button>
+  </div>
+</div>
+<script>
+(function() {
+  var consent = localStorage.getItem('ga_consent');
+  var banner = document.getElementById('cookie-banner');
+  function loadGA() {
+    var s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T78BQ748F8';
+    s.async = true;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-T78BQ748F8');
+  }
+  if (consent === 'accepted') {
+    if (banner) banner.style.display = 'none';
+    loadGA();
+  } else if (consent === 'declined') {
+    if (banner) banner.style.display = 'none';
+  } else {
+    document.getElementById('cookie-accept').onclick = function() {
+      localStorage.setItem('ga_consent', 'accepted');
+      banner.style.display = 'none';
+      loadGA();
+    };
+    document.getElementById('cookie-decline').onclick = function() {
+      localStorage.setItem('ga_consent', 'declined');
+      banner.style.display = 'none';
+    };
+  }
 })();
 </script>
 </body>
