@@ -476,14 +476,22 @@
   .mobile-menu a:last-child { border-bottom: none; }
   .mobile-menu .mob-cta { margin-top: 16px; background: var(--accent); color: #fff; font-weight: 600; font-size: 15px; padding: 13px 0; border-radius: 6px; text-align: center; border-bottom: none; }
 
+  @media (max-width: 900px) {
+    section { padding: 80px 5.5vw; }
+    .cta-band { padding: 80px 5.5vw; }
+  }
+
   @media (max-width: 680px) {
     .nav-link { display: none; }
     .nav-cta { display: none; }
     .hamburger { display: flex; }
     nav { padding: 0 5vw; height: 56px; }
     .hero { padding: 96px 5vw 60px; }
+    h1 { font-size: 52px; }
     section { padding: 56px 5vw; }
     .cta-band { padding: 64px 5vw; }
+    .free-header { padding: 24px 20px; }
+    .free-body { padding: 24px 20px; }
     .email-row { flex-direction: column; }
     .email-row input[type="email"] { min-width: unset; width: 100%; }
     .btn-primary { width: 100%; }
