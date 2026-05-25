@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "evntry-site",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/albertosurina/Downloads/envtry landing pages' && python3 -m http.server 4041"],
+      "port": 4041
+    }
+  ]
+}

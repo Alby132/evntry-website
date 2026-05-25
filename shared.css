@@ -7,6 +7,7 @@
     --surface2: #181818;
     --border: #252525;
     --accent: #FF5C1A;
+    --accent-btn: #C94000;  /* darker for white-text buttons — 4.98:1 contrast */
     --accent-dim: rgba(255,92,26,0.10);
     --text: #F0EDE6;
     --muted: #888880;
@@ -60,7 +61,7 @@
   .nav-link:hover { color: var(--text); }
 
   .nav-cta {
-    background: var(--accent);
+    background: var(--accent-btn);
     color: #fff;
     font-family: 'Figtree', sans-serif;
     font-weight: 600;
@@ -201,7 +202,7 @@
   .email-row input[type="email"]:focus { border-color: var(--accent); }
 
   .btn-primary {
-    background: var(--accent);
+    background: var(--accent-btn);
     color: #fff;
     font-family: 'Figtree', sans-serif;
     font-weight: 600;
@@ -461,7 +462,7 @@
   .compare-feature { color: var(--muted); }
   .ev-val { color: var(--text); font-weight: 500; }
   .check { color: #4ade80; }
-  .cross { color: #3a3a38; }
+  .cross { color: var(--muted); }
 
   /* Up and running */
   .start-grid {
@@ -590,7 +591,7 @@
   .mobile-menu a:hover { color: var(--text); }
   .mobile-menu .mob-cta {
     margin-top: 16px;
-    background: var(--accent);
+    background: var(--accent-btn);
     color: #fff;
     font-weight: 600;
     font-size: 15px;
@@ -726,7 +727,7 @@
   #sticky-cta.visible { transform: translateY(0); }
   #sticky-cta p { font-size: 14px; color: var(--muted); margin: 0; }
   #sticky-cta .sticky-btn {
-    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    background: var(--accent-btn); color: #fff; border: none; cursor: pointer;
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em;
     padding: 8px 20px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
@@ -745,7 +746,7 @@
   #cookie-banner p { margin: 0; }
   #cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
   #cookie-accept {
-    background: var(--accent); color: #fff; border: none;
+    background: var(--accent-btn); color: #fff; border: none;
     padding: 6px 14px; border-radius: 5px; font-size: 13px;
     font-family: 'Figtree', sans-serif; font-weight: 600; cursor: pointer;
   }
