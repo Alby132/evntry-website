@@ -525,12 +525,12 @@
     background: var(--surface);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 100px 6vw;
+    padding: 72px 6vw;
     text-align: center;
   }
 
   .cta-band h2 { margin-bottom: 16px; }
-  .cta-band .section-sub { margin: 0 auto 48px; }
+  .cta-band .section-sub { margin: 0 auto 32px; }
   .cta-band .form-wrap { margin: 0 auto; }
   .cta-band .email-row { justify-content: center; }
   .cta-band .form-note { text-align: center; }
