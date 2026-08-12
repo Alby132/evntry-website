@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Start free with 5% per ticket. Upgrade to Headline at €49/month for zero per-ticket fees. No hidden costs, no lock-in.">
+<meta name="description" content="Start free with 3% per ticket — no monthly fee, one event a month. Need more? Get a custom plan built around your venue.">
 <meta property="og:title" content="Pricing — Evntry">
-<meta property="og:description" content="Start free with 5% per ticket. Upgrade to Headline at €49/month for zero per-ticket fees. No hidden costs, no lock-in.">
+<meta property="og:description" content="Start free with 3% per ticket — no monthly fee, one event a month. Need more? Get a custom plan built around your venue.">
 <meta property="og:image" content="https://evntry.app/og-image.png">
 <meta property="og:url" content="https://evntry.app/pricing.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Evntry">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pricing — Evntry">
-<meta name="twitter:description" content="Start free with 5% per ticket. Upgrade to Headline at €49/month for zero per-ticket fees. No hidden costs, no lock-in.">
+<meta name="twitter:description" content="Start free with 3% per ticket — no monthly fee, one event a month. Need more? Get a custom plan built around your venue.">
 <meta name="twitter:image" content="https://evntry.app/og-image.png">
 <title>Pricing — Evntry</title>
 <link rel="stylesheet" href="fonts.css?v=2">
@@ -615,7 +615,7 @@
     {
       "@type": "Question",
       "name": "How do I get paid?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account minus the Evntry fee (5% on Doors, 0% on Headline) and Stripe's standard card processing fee. Payouts follow Stripe's normal schedule — typically 2–7 business days." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account minus the Evntry fee (3% on the free plan, lower on custom plans) and Stripe's standard card processing fee. Payouts follow Stripe's normal schedule — typically 2–7 business days." }
     },
     {
       "@type": "Question",
@@ -625,12 +625,12 @@
     {
       "@type": "Question",
       "name": "What if I only do a few events a year?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Stay on Doors. It's completely free — you only pay the 5% when tickets actually sell. No monthly cost, no risk. Upgrade when volume makes the math work in your favour." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Stay on the free plan. You pay 3% only when tickets sell — no monthly cost, no risk. Reach out when you're ready to scale." }
     },
     {
       "@type": "Question",
       "name": "When does Headline pay off?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Headline costs €49/month with 0% per ticket, vs Doors which is free but takes 5%. The break-even is €980/month in ticket revenue — roughly 1–2 decent events. Sell more than that and Headline is the cheaper plan." }
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on how often you run events, how many tickets you sell, and what features you need. Book a call and we'll build a plan that makes sense for your venue." }
     },
     {
       "@type": "Question",
@@ -656,7 +656,6 @@
 <nav>
   <a href="index.html" class="logo">EVN<span>T</span>RY</a>
   <div class="nav-right">
-    <a href="index.html" class="nav-link">For venues</a>
     <a href="pricing.html" class="nav-link active">Pricing</a>
     <a href="fans.html" class="nav-link">For fans</a>
     <a href="musicians.html" class="nav-link">For musicians</a>
@@ -669,7 +668,6 @@
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">For venues</a>
   <a href="pricing.html">Pricing</a>
   <a href="fans.html">For fans</a>
   <a href="musicians.html">For musicians</a>
@@ -683,7 +681,57 @@
 <section class="hero">
   <p class="eyebrow">Simple pricing</p>
   <h1>Pay as you<br>grow. Or <em>don't.</em></h1>
-  <p class="hero-sub">Start free. Upgrade when the volume justifies it. No contracts, no hidden fees.</p>
+  <p class="hero-sub">Start with one free event a month. When you're ready to grow, we'll build a plan around your venue.</p>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="pricing-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:720px;">
+
+    <!-- Free plan -->
+    <div class="plan">
+      <div class="plan-badge" style="visibility:hidden">placeholder</div>
+      <div class="plan-name">Free</div>
+      <div class="plan-tagline">Start selling tickets today. One event a month, no monthly fee, no risk.</div>
+      <div class="plan-price">
+        <span class="price-free">Free</span>
+      </div>
+      <div class="plan-fee">+ <strong>3%</strong> per ticket sold &nbsp;·&nbsp; No monthly fee</div>
+      <ul class="plan-features">
+        <li>1 event per month</li>
+        <li>QR code door scanning</li>
+        <li>Stripe payments (fans pay no extra fees)</li>
+        <li>Email ticket confirmation</li>
+        <li>Live ticket tracking</li>
+        <li>Shareable ticket link</li>
+      </ul>
+      <a href="https://app.evntry.app" class="plan-cta secondary">Start free →</a>
+    </div>
+
+    <!-- Custom plan -->
+    <div class="plan featured">
+      <div class="plan-badge">Custom</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-tagline">Pricing matched to your venue — events per month, capacity, and how you grow.</div>
+      <div class="plan-price">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--muted);letter-spacing:-0.01em;line-height:1;">Let's talk</span>
+      </div>
+      <div class="plan-fee">Based on your venue &nbsp;·&nbsp; Custom contract</div>
+      <ul class="plan-features">
+        <li>Everything in Free</li>
+        <li>Unlimited events</li>
+        <li>Email blasts to ticket holders</li>
+        <li>Event cover images</li>
+        <li>Priority support</li>
+        <li>Dedicated account manager</li>
+        <li>Custom contract &amp; invoicing</li>
+        <li>Volume-based fee reduction</li>
+      </ul>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="plan-cta primary">Book a call →</a>
+    </div>
+
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -699,7 +747,7 @@
       <div class="plan-price">
         <span class="price-free">Free</span>
       </div>
-      <div class="plan-fee">+ <strong>5%</strong> per ticket sold &nbsp;·&nbsp; No monthly fee</div>
+      <div class="plan-fee">+ <strong>3%</strong> per ticket sold &nbsp;·&nbsp; No monthly fee</div>
       <ul class="plan-features">
         <li>Up to 3 active events</li>
         <li>QR code door scanning</li>
@@ -715,7 +763,7 @@
     <div class="plan featured">
       <div class="plan-badge">Most popular</div>
       <div class="plan-name">Headline</div>
-      <div class="plan-tagline">For venues doing regular events. Zero per-ticket cost means more profit per sale.</div>
+      <div class="plan-tagline">For busy venues running events regularly. Volume-based pricing built around your schedule.</div>
       <div class="plan-price">
         <span class="price-currency">€</span>
         <span class="price-amount">49</span>
@@ -757,7 +805,7 @@
   <div class="explainer">
     <div class="explainer-item">
       <div class="explainer-label">How the fee works</div>
-      <p>On the free Doors plan, Evntry takes <strong>5% of each ticket</strong> you sell. On Headline and Tour it's 0%. Fans always pay exactly what you set — no booking fee added on their end.</p>
+      <p>On the free plan, Evntry takes <strong>3% of each ticket</strong> you sell. Custom plans reduce or eliminate this. Fans always pay exactly what you set — no booking fee added on their end.</p>
     </div>
     <div class="explainer-item">
       <div class="explainer-label">When am I billed?</div>
@@ -787,27 +835,27 @@
     </div>
     <div class="faq-item">
       <div class="faq-q">How do I get paid?</div>
-      <div class="faq-a">Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account — minus the Evntry fee (5% on Doors, 0% on Headline) and Stripe's standard card processing fee (~1.4% + €0.25 for European cards). <strong>Payouts follow Stripe's normal schedule</strong> — typically 2–7 business days.</div>
+      <div class="faq-a">Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account — minus the Evntry fee (3% on the free plan, lower on custom) and Stripe's standard card processing fee (~1.4% + €0.25 for European cards). <strong>Payouts follow Stripe's normal schedule</strong> — typically 2–7 business days.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Can I sell free tickets?</div>
-      <div class="faq-a">Yes. Free events have no fees at all — no 5%, nothing. You can also mix free and paid tiers on the same event (e.g. free general entry, paid VIP table). <strong>Free ticket tiers are always free</strong> regardless of your plan.</div>
+      <div class="faq-a">Yes. Free events have no fees at all — no 3%, nothing. You can also mix free and paid tiers on the same event (e.g. free general entry, paid VIP table). <strong>Free ticket tiers are always free</strong> regardless of your plan.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">What if I only do a few events a year?</div>
-      <div class="faq-a">Stay on Doors. It's completely free — you only pay the 5% when tickets actually sell. <strong>No monthly cost, no risk.</strong> Upgrade when volume makes the math work in your favour.</div>
+      <div class="faq-a">Stay on the free plan. You pay 3% only when tickets actually sell — <strong>no monthly cost, no risk.</strong> Start free and reach out when you're ready to scale.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">When does Headline pay off?</div>
-      <div class="faq-a">Headline costs €49/month with 0% per ticket, vs Doors which is free but takes 5%. The break-even is <strong>€980/month in ticket revenue</strong> — roughly 1–2 decent events. Sell more than that and Headline is the cheaper plan.</div>
+      <div class="faq-q">How is the custom plan priced?</div>
+      <div class="faq-a">It depends on how often you run events, how many tickets you sell, and what features you need. We work through it together — <strong>book a call and we'll put together a number that makes sense for your venue.</strong> No generic tiers, no surprises.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Can I cancel anytime?</div>
-      <div class="faq-a">Yes. No contracts, no cancellation fees. Cancel before your next billing date and you won't be charged again. <strong>Your events and attendee data stay accessible.</strong></div>
+      <div class="faq-a">Yes. Custom plans have no lock-in unless you've agreed to a fixed contract. <strong>Your events and attendee data always stay accessible.</strong></div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Is there a Stripe fee on top of the Evntry fee?</div>
-      <div class="faq-a">Yes — Stripe charges their own payment processing fee separately (typically ~1.4% + €0.25 for European cards, higher for non-EU cards). This goes directly to Stripe, not to us. <strong>On Headline, the only fee is Stripe's</strong> — Evntry takes nothing per ticket.</div>
+      <div class="faq-a">Yes — Stripe charges their own payment processing fee separately (typically ~1.4% + €0.25 for European cards, higher for non-EU cards). This goes directly to Stripe, not to us. <strong>On the free plan the only fees are 3% (Evntry) + Stripe's processing fee.</strong> Custom plans can reduce or eliminate the Evntry portion.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Is Evntry available in my country?</div>
