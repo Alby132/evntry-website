@@ -1,0 +1,19 @@
+---
+// i18n homepage stubs for non-English locales
+// Full translations will be added as separate files per locale when ready
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'de' } },
+    { params: { lang: 'it' } },
+    { params: { lang: 'pl' } },
+    { params: { lang: 'hr' } },
+    { params: { lang: 'sl' } },
+  ];
+}
+
+const { lang } = Astro.params;
+
+// Redirect to English homepage
+return Astro.redirect('/', 301);
+---

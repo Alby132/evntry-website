@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Evntry for musicians",
+  "url": "https://evntry.app/musicians.html",
+  "description": "Create your free musician profile on Evntry. List your gigs, grow your fanbase, and get found by venues — for free, forever."
+}];
+---
+<BaseLayout
+  title="Evntry for musicians — Get found, get booked, get paid"
+  description="Create your free musician profile on Evntry. List your gigs, grow your fanbase, and get found by venues — for free, forever."
+  ogTitle="Evntry for musicians — Get found, get booked, get paid"
+  ogUrl="https://evntry.app/musicians.html"
+  canonical="https://evntry.app/musicians.html"
+  ldJson={ldJson}
+  activeNav="musicians"
+  fanStyle={true}
+>
+
+<style is:global>
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 140px 6vw 100px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(255,92,26,0.07) 0%, transparent 65%); top: 30%; right: -100px; pointer-events: none; }
+  .hero h1 { font-size: clamp(68px, 11vw, 130px); line-height: 0.90; letter-spacing: -0.01em; text-transform: uppercase; max-width: 900px; margin-bottom: 36px; }
+  .hero-sub { font-size: 19px; color: var(--muted); max-width: 520px; margin-bottom: 48px; line-height: 1.7; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  section { padding: 100px 6vw; }
+  .how-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .free-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); border: 1px solid var(--accent); color: var(--accent); font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 20px; margin-bottom: 28px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .free-badge::before { content: '★'; font-size: 11px; }
+  .perks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .perk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 32px 26px; transition: border-color 0.2s; }
+  .perk-card:hover { border-color: #3a3a38; }
+  .perk-icon { font-size: 28px; display: block; margin-bottom: 18px; }
+  .perk-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; color: var(--text); line-height: 1; }
+  .perk-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .steps-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .step-box { background: var(--surface2); padding: 32px 26px; }
+  .step-box-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 40px; color: var(--faint); line-height: 1; margin-bottom: 16px; }
+  .step-box h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; color: var(--text); line-height: 1; }
+  .step-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .free-band { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; max-width: 720px; }
+  .free-header { background: var(--accent); padding: 28px 32px; }
+  .free-header h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: 6px; }
+  .free-header p { color: #fff; opacity: 0.9; font-size: 15px; }
+  .free-body { background: var(--surface); padding: 28px 32px; }
+  .free-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .free-perk { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--muted); }
+  .free-perk-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .free-perk strong { color: var(--text); font-weight: 500; }
+  .free-note { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .cta-band { padding: 100px 6vw; text-align: center; }
+  .cta-band .eyebrow { justify-content: center; }
+  .success-msg { display: none; margin-top: 12px; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .email-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .email-row input[type="email"] { flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Figtree', sans-serif; font-size: 14px; padding: 12px 16px; border-radius: 6px; outline: none; transition: border-color 0.15s; }
+  .email-row input:focus { border-color: var(--accent); }
+  @media (max-width: 900px) { section { padding: 80px 5.5vw; } }
+  @media (max-width: 680px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 5vw; height: 56px; }
+    .hero { padding: 96px 5vw 60px; }
+    section { padding: 56px 5vw; }
+    .cta-band { padding: 64px 5vw; }
+    .free-header { padding: 24px 20px; }
+    .free-body { padding: 24px 20px; }
+    .email-row { flex-direction: column; }
+    .email-row input[type="email"] { min-width: unset; width: 100%; }
+    .btn-primary { width: 100%; }
+  }
+</style>
+
+<main>
+
+<section class="hero">
+  <div class="free-badge">Free for musicians</div>
+  <p class="eyebrow">For musicians</p>
+  <h1>Play more.<br><em>Get found.</em></h1>
+  <p class="hero-sub">
+    <strong>Your music page, your gig calendar, your fanbase</strong> — all in one place. Venues find you. Fans follow you. You just play.
+  </p>
+  <div class="form-wrap">
+    <form name="musician-signup-hero" onsubmit="submitForm(event, 's1')">
+      <div class="email-row">
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit" class="btn-primary">Get early access</button>
+      </div>
+      <p class="form-note">No spam. One email when we launch.</p>
+      <p class="success-msg" id="s1">✓ You're on the list. See you on stage.</p>
+    </form>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">The problem</p>
+  <h2>Three things<br>holding you <em>back</em></h2>
+  <p class="section-sub">You're good at what you do. The music industry infrastructure isn't built to help you.</p>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-num">Pain 01</span>
+      <h3>No single profile for bookings</h3>
+      <p>Your EPK is a PDF from 2022. Your Instagram is full of personal content. Your website costs €15/month and three clicks to find. Venues want one link, one page, one fast answer to "who are you."</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">Pain 02</span>
+      <h3>Fans can't follow your gigs</h3>
+      <p>Spotify is for streams. Instagram is for clips. Bandcamp is for merch. Nowhere lists "every gig this person is playing" — so fans never know where to look.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-num">Pain 03</span>
+      <h3>Venues find you the hard way</h3>
+      <p>Bookers stumble onto you through other bands, word of mouth, late-night Instagram scrolls. No easy way for a venue to find a sax player or a punk trio when they need one.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">What you get</p>
+  <h2>Built for the<br>working <em>musician</em></h2>
+  <p class="section-sub">Not a streaming platform. Not a social network. A real tool for getting more people to your gigs.</p>
+  <div class="perks-grid">
+    <div class="perk-card">
+      <span class="perk-icon">🎸</span>
+      <h3>Your profile</h3>
+      <p>Bio, photos, links, music samples. The one page you send to anyone — venue, journalist, new fan — that tells them everything.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">📅</span>
+      <h3>Every gig, one place</h3>
+      <p>When you play at a venue on Evntry, your gig auto-appears on your profile. No double-posting, no manual updates.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">🔔</span>
+      <h3>Fans follow you</h3>
+      <p>Fans hit follow once and get notified every time you have a gig — no matter which venue you're playing. Direct line to your audience.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">📨</span>
+      <h3>Booking inquiries</h3>
+      <p>Venues searching for acts can find you and send a booking request straight through the app. No more cold DMs disappearing into requests folders.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="how-section">
+  <p class="eyebrow">How it works</p>
+  <h2>Three steps.<br><em>Then play.</em></h2>
+  <p class="section-sub">Set up your profile once. Forget about it. Focus on the music.</p>
+  <div class="steps-row">
+    <div class="step-box">
+      <div class="step-box-num">01</div>
+      <h3>Create your profile</h3>
+      <p>Sign up free. Add your bio, photos, music links, and the genres you play. Takes 5 minutes.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">02</div>
+      <h3>Get tagged on gigs</h3>
+      <p>When a venue books you for an event on Evntry, they tag you. Your gig appears on your profile automatically.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">03</div>
+      <h3>Fans get notified</h3>
+      <p>Anyone who follows you gets a notification. They tap, buy a ticket, show up. You play to a full room.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Pricing</p>
+  <h2>Free.<br><em>That's it.</em></h2>
+  <p class="section-sub">Musicians are the reason the platform exists. You shouldn't have to pay to be discovered.</p>
+  <div class="free-band">
+    <div class="free-header">
+      <h3>Musician account</h3>
+      <p>Everything you need to be found, followed, and booked.</p>
+    </div>
+    <div class="free-body">
+      <ul class="free-perks">
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Unlimited gig listings</strong> — no caps, ever</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Unlimited followers</strong> — your fans, your direct line</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Booking inbox</strong> — venues come to you</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Basic analytics</strong> — see who's following, who's coming</span></li>
+        <li class="free-perk"><span class="free-perk-dot"></span><span><strong>Profile customization</strong> — bio, photos, links, samples</span></li>
+      </ul>
+      <p class="free-note">A Pro tier with advanced features may come later. The core experience stays free, forever.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Join the list</p>
+  <h2>Ready to be<br><em>found?</em></h2>
+  <p class="section-sub">Leave your email and we'll let you know the moment Evntry is live for musicians.</p>
+  <div class="form-wrap" style="max-width:480px;margin:0 auto;">
+    <form name="musician-signup-bottom" onsubmit="submitForm(event, 's2')">
+      <div class="email-row">
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit" class="btn-primary">Get early access</button>
+      </div>
+      <p class="form-note">No spam. One email when we launch.</p>
+      <p class="success-msg" id="s2">✓ You're on the list. See you on stage.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<script>
+  function submitForm(e, successId) {
+    e.preventDefault();
+    const form = e.target;
+    fetch('https://formspree.io/f/mzdwgbow', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    }).catch(() => {
+      document.getElementById(successId).style.display = 'block';
+      form.reset();
+    });
+  }
+</script>
+</BaseLayout>

@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About Evntry",
+  "url": "https://evntry.app/about.html",
+  "description": "Events belong to the people who make them. We built Evntry because independent venues deserve better than platforms that take 10–15% per ticket.",
+  "publisher": { "@type": "Organization", "name": "Evntry", "url": "https://evntry.app" }
+}];
+---
+<BaseLayout
+  title="About — Evntry"
+  description="Events belong to the people who make them. We built Evntry because independent venues deserve better than platforms that take 10–15% per ticket."
+  ogTitle="About — Evntry"
+  ogUrl="https://evntry.app/about.html"
+  canonical="https://evntry.app/about.html"
+  ldJson={ldJson}
+  activeNav="about"
+>
+
+<style is:global>
+  .hero { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; padding: 160px 6vw 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(255,92,26,0.09) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .hero-inner { position: relative; max-width: 720px; }
+  .hero h1 { font-size: clamp(52px, 8vw, 96px); line-height: 0.92; margin-bottom: 28px; }
+  .hero-sub { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 560px; }
+  .story { padding: 100px 6vw; border-top: 1px solid var(--border); }
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1000px; }
+  .story-col h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.0; margin-bottom: 20px; text-transform: uppercase; }
+  .story-col p { font-size: 16px; color: var(--muted); line-height: 1.75; }
+  .story-col p + p { margin-top: 16px; }
+  .story-col .highlight { color: var(--text); font-weight: 600; }
+  .values { padding: 100px 6vw; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .values-eyebrow { margin-bottom: 16px; }
+  .values h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 56px); line-height: 0.95; text-transform: uppercase; margin-bottom: 56px; }
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .value-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 32px 28px; transition: border-color 0.2s; }
+  .value-card:hover { border-color: #3a3a38; }
+  .value-icon { width: 42px; height: 42px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 20px; }
+  .value-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; margin-bottom: 10px; }
+  .value-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .founder { padding: 100px 6vw; border-bottom: 1px solid var(--border); display: flex; justify-content: center; }
+  .founder-card { max-width: 580px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 36px 40px; }
+  .founder-card blockquote { font-size: 17px; color: var(--muted); line-height: 1.75; font-style: italic; margin-bottom: 24px; }
+  .founder-card blockquote strong { color: var(--text); font-style: normal; }
+  .founder-sig { display: flex; align-items: center; gap: 14px; }
+  .founder-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--accent-dim); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--accent); }
+  .founder-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .founder-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .cta-band { padding: 100px 6vw; text-align: center; border-bottom: 1px solid var(--border); }
+  .cta-band .eyebrow { justify-content: center; }
+  .hero-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; gap: 48px; } }
+  @media (max-width: 680px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 100px 5vw 64px; }
+    .story { padding: 64px 5vw; }
+    .values { padding: 64px 5vw; }
+    .founder { padding: 64px 5vw; }
+    .founder-card { padding: 28px 24px; }
+    .cta-band { padding: 72px 5vw; }
+  }
+</style>
+
+<main>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Our mission</p>
+    <h1>Events belong to the people<br>who <em>make</em> them.</h1>
+    <p class="hero-sub">We built Evntry because great music nights deserve better tools — and the people running them deserve to keep more of what they earn.</p>
+  </div>
+</section>
+
+<section class="story">
+  <div class="story-grid">
+    <div class="story-col">
+      <h2>The problem</h2>
+      <p>Most ticketing platforms are built for <span class="highlight">the platform, not the organizer.</span> They take 10–15% per ticket, lock you out of your own attendee data, and make you contact support just to update an event.</p>
+      <p>Independent venue owners and event organizers — the people actually making culture happen — get the worst deal.</p>
+    </div>
+    <div class="story-col">
+      <h2>Why we built this</h2>
+      <p>So we built Evntry — <span class="highlight">simple ticketing for people who run nights.</span> Set up an event in minutes, sell tickets with no fees for your fans, and scan the door from your phone.</p>
+      <p>You keep your revenue. You own your attendee list. No lock-in, no surprise charges, no begging for support.</p>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <p class="eyebrow values-eyebrow">What we believe</p>
+  <h2>Built on three ideas</h2>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🎟</div>
+      <h3>Built for independence</h3>
+      <p>No platform lock-in, no percentage skimmed off the top forever. Your event, your money, your audience relationship.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🤝</div>
+      <h3>Honest pricing</h3>
+      <p>Free tier with a small transaction fee when you're starting out. Custom plans when you're ready to grow. Nothing hidden.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔒</div>
+      <h3>Your data, always</h3>
+      <p>Attendee lists, ticket sales, analytics — they belong to you. Always. We're a tool, not a gatekeeper.</p>
+    </div>
+  </div>
+</section>
+
+<section class="founder">
+  <div class="founder-card">
+    <blockquote>
+      "I kept watching venue owners hustle to sell tickets through spreadsheets, WhatsApp threads, and platforms that took a cut of every single sale. <strong>There had to be a better way.</strong> Evntry is that — straightforward tooling for the people who make independent nights happen."
+    </blockquote>
+    <div class="founder-sig">
+      <div class="founder-avatar">A</div>
+      <div>
+        <div class="founder-name">Alberto</div>
+        <div class="founder-role">Founder, Evntry</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Get started</p>
+  <h2>Ready to run your night<br>the right way?</h2>
+  <p class="section-sub">Create your free account in seconds. No contracts, no approval process.</p>
+  <div class="form-wrap">
+    <div class="hero-cta-row">
+      <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Start selling tickets →</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 30-min call</a>
+    </div>
+    <p class="form-note" style="text-align:center;margin-top:14px;">Free to start. No credit card needed.</p>
+  </div>
+</section>
+
+</main>
+</BaseLayout>

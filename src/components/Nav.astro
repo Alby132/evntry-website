@@ -1,0 +1,41 @@
+---
+interface Props {
+  active?: string;
+  fanStyle?: boolean;
+}
+const { active, fanStyle = false } = Astro.props;
+---
+<nav>
+  <a href="/" class="logo">EVN<span>T</span>RY</a>
+  <div class="nav-right">
+    <a href="/pricing.html" class={`nav-link${active === 'pricing' ? ' active' : ''}`}>Pricing</a>
+    <a href="/fans.html" class={`nav-link${active === 'fans' ? ' active' : ''}`}>For fans</a>
+    <a href="/musicians.html" class={`nav-link${active === 'musicians' ? ' active' : ''}`}>For musicians</a>
+    <a href="/about.html" class={`nav-link${active === 'about' ? ' active' : ''}`}>About</a>
+    <a href="/blog.html" class={`nav-link${active === 'blog' ? ' active' : ''}`}>Blog</a>
+    <a href="https://app.evntry.app" class="nav-cta" style="text-decoration:none;">Start free</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/pricing.html">Pricing</a>
+  <a href="/fans.html">For fans</a>
+  <a href="/musicians.html">For musicians</a>
+  <a href="/about.html">About</a>
+  <a href="/blog.html">Blog</a>
+  <a href="https://app.evntry.app" class="mob-cta" onclick="closeMenu()">Start free</a>
+</div>
+
+{fanStyle && (
+  <style is:global>
+    .nav-cta {
+      background: transparent !important;
+      color: var(--text) !important;
+      border: 1px solid var(--border) !important;
+      transition: border-color 0.15s !important;
+    }
+    .nav-cta:hover { border-color: #444 !important; opacity: 1 !important; }
+  </style>
+)}

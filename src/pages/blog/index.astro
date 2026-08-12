@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ id }) => id.startsWith('en/')))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Evntry Blog",
+  "url": "https://evntry.app/blog/",
+  "description": "Tips for venue owners and event organizers — ticketing, promotion, door management, and growing your local music scene.",
+  "publisher": { "@type": "Organization", "name": "Evntry", "url": "https://evntry.app" }
+}];
+---
+<BaseLayout
+  title="Evntry Blog — Ticketing tips for venue owners"
+  description="Tips for venue owners and event organizers — ticketing, promotion, door management, and growing your local music scene."
+  ogTitle="Evntry Blog — Ticketing tips for venue owners"
+  ogUrl="https://evntry.app/blog/"
+  canonical="https://evntry.app/blog/"
+  ldJson={ldJson}
+  activeNav="blog"
+>
+
+<style is:global>
+  .blog-hero { padding: 140px 6vw 80px; position: relative; overflow: hidden; }
+  .blog-hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,92,26,0.07) 0%, transparent 65%); top: 40%; right: -80px; pointer-events: none; }
+  .blog-hero h1 { font-size: clamp(52px, 8vw, 100px); line-height: 0.92; margin-bottom: 20px; max-width: 700px; }
+  .blog-hero p { font-size: 18px; color: var(--muted); max-width: 480px; }
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 0; }
+  .post-card { background: var(--bg); padding: 36px 32px; display: flex; flex-direction: column; transition: background 0.15s; text-decoration: none; color: inherit; }
+  .post-card:hover { background: var(--surface); }
+  .post-card-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .post-card h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(22px, 2.5vw, 28px); text-transform: uppercase; line-height: 1.05; margin-bottom: 14px; color: var(--text); }
+  .post-card p { font-size: 14px; color: var(--muted); line-height: 1.65; flex: 1; margin-bottom: 24px; }
+  .post-card-meta { font-size: 12px; color: var(--muted); }
+  .post-card-link { font-size: 13px; color: var(--accent); font-weight: 600; margin-top: 20px; }
+  .blog-cta { padding: 80px 6vw; text-align: center; border-top: 1px solid var(--border); }
+  .blog-cta .eyebrow { justify-content: center; }
+  section { padding: 60px 6vw; }
+  @media (max-width: 680px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .blog-hero { padding: 100px 5vw 60px; }
+    .post-grid { grid-template-columns: 1fr; }
+    section { padding: 40px 5vw; }
+    .blog-cta { padding: 64px 5vw; }
+  }
+</style>
+
+<main>
+
+<section class="blog-hero">
+  <p class="eyebrow">Evntry Blog</p>
+  <h1>Insights for<br>venue owners &amp;<br><em>organizers.</em></h1>
+  <p>Ticketing tips, promotion tactics, and hard-won advice for people who run nights.</p>
+</section>
+
+<section>
+  <div class="post-grid">
+    {posts.map(post => {
+      const slug = post.id.replace('en/', '').replace('.mdx', '');
+      const displayDate = post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      return (
+        <a href={`/blog/${slug}.html`} class="post-card">
+          <div class="post-card-tag">{post.data.tag}</div>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+          <div class="post-card-meta">{displayDate}</div>
+          <div class="post-card-link">Read article →</div>
+        </a>
+      );
+    })}
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="blog-cta">
+  <p class="eyebrow">Ready to start?</p>
+  <h2>Set up your first event<br>in <em>5 minutes.</em></h2>
+  <p class="section-sub" style="margin-bottom:32px;">Free to start. No contracts. No fees for your fans.</p>
+  <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Create free account →</a>
+</section>
+
+</main>
+</BaseLayout>

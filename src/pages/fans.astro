@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Evntry for fans",
+  "url": "https://evntry.app/fans.html",
+  "description": "Find live music near you. Buy tickets in seconds — no extra fees. Follow your favourite venues and get early access with an Evntry fan subscription."
+}];
+---
+<BaseLayout
+  title="Evntry for fans — Find live music near you"
+  description="Find live music near you. Buy tickets in seconds — no extra fees. Follow your favourite venues and get early access with an Evntry fan subscription."
+  ogTitle="Evntry for fans — Find live music near you"
+  ogUrl="https://evntry.app/fans.html"
+  canonical="https://evntry.app/fans.html"
+  ldJson={ldJson}
+  activeNav="fans"
+  fanStyle={true}
+>
+
+<style is:global>
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 140px 6vw 100px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(255,92,26,0.07) 0%, transparent 65%); bottom: 0; left: 30%; pointer-events: none; }
+  .hero h1 { font-size: clamp(68px, 11vw, 130px); line-height: 0.90; letter-spacing: -0.01em; text-transform: uppercase; max-width: 900px; margin-bottom: 36px; }
+  .hero-sub { font-size: 19px; color: var(--muted); max-width: 500px; margin-bottom: 48px; line-height: 1.7; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  section { padding: 100px 6vw; }
+  .how-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .perks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .perk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 32px 26px; transition: border-color 0.2s; }
+  .perk-card:hover { border-color: #3a3a38; }
+  .perk-icon { font-size: 28px; display: block; margin-bottom: 18px; }
+  .perk-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; color: var(--text); line-height: 1; }
+  .perk-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .steps-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 0; }
+  .step-box { background: var(--surface2); padding: 32px 26px; }
+  .step-box-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 40px; color: var(--faint); line-height: 1; margin-bottom: 16px; }
+  .step-box h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; color: var(--text); line-height: 1; }
+  .step-box p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .sub-band { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; max-width: 700px; }
+  .sub-header { background: var(--accent); padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .sub-header h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; color: #fff; line-height: 1; }
+  .sub-header .price { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 36px; color: #fff; line-height: 1; }
+  .sub-header .price span { font-size: 16px; font-weight: 400; font-family: 'Figtree', sans-serif; opacity: 0.8; }
+  .sub-body { background: var(--surface); padding: 28px 32px; }
+  .sub-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .sub-perk { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--muted); }
+  .sub-perk-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .sub-perk strong { color: var(--text); font-weight: 500; }
+  .sub-note { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .cta-band { padding: 100px 6vw; text-align: center; }
+  .cta-band .eyebrow { justify-content: center; }
+  @media (max-width: 900px) { section { padding: 80px 5.5vw; } }
+  @media (max-width: 680px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    nav { padding: 0 5vw; height: 56px; }
+    .hero { padding: 96px 5vw 60px; }
+    section { padding: 56px 5vw; }
+    .cta-band { padding: 64px 5vw; }
+  }
+</style>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">For music fans</p>
+  <h1>Your local<br>scene.<br><em>Closer.</em></h1>
+  <p class="hero-sub">
+    Evntry connects you to the <strong>live music happening near you</strong> — and gives you real perks for showing up. No more missing out because you heard about it too late.
+  </p>
+  <div class="form-wrap">
+    <a href="https://app.evntry.app" class="btn-primary" style="display:inline-block;text-decoration:none;padding:14px 28px;">Browse events near you →</a>
+    <p class="form-note">Free for fans. No account needed to buy a ticket.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Fan perks</p>
+  <h2>Stop finding out<br>about gigs <em>after</em><br>they sell out</h2>
+  <p class="section-sub">The Evntry fan subscription gives you a real edge at the venues you love.</p>
+  <div class="perks-grid">
+    <div class="perk-card">
+      <span class="perk-icon">⚡</span>
+      <h3>Early access</h3>
+      <p>Subscriber tickets go on sale before anyone else sees the event. If a show is going to sell out, you'll have yours before it even goes public.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">🎟</span>
+      <h3>Subscriber pricing</h3>
+      <p>Selected events come with discounted tickets for Evntry subscribers. Show up more, spend less.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">🗳</span>
+      <h3>Vote on what's next</h3>
+      <p>Venues using Evntry let their fans vote on upcoming bookings. Your favourite band might play next — if you vote for them.</p>
+    </div>
+    <div class="perk-card">
+      <span class="perk-icon">🎵</span>
+      <h3>Follow artists</h3>
+      <p>Follow musicians and get notified whenever they have a gig nearby. No more scrolling through Instagram hoping you catch a post.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="how-section">
+  <p class="eyebrow">How it works</p>
+  <h2>Simple as<br>showing <em>up</em></h2>
+  <p class="section-sub">Three steps from signup to front row.</p>
+  <div class="steps-row">
+    <div class="step-box">
+      <div class="step-box-num">01</div>
+      <h3>Join Evntry</h3>
+      <p>Create a free account. Subscribe for fan perks, or browse events for free — no subscription needed to buy tickets.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">02</div>
+      <h3>Follow your venues</h3>
+      <p>Follow your favourite local bars and venues. Get notified as soon as they post a new event — before the public announcement.</p>
+    </div>
+    <div class="step-box">
+      <div class="step-box-num">03</div>
+      <h3>Grab your ticket</h3>
+      <p>Buy directly in the app or through a link. Pay by card. Your QR code lives in the app — just show it at the door.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow">Fan subscription</p>
+  <h2>One low price.<br><em>Everywhere</em><br>you go out.</h2>
+  <p class="section-sub">A single subscription that works across every venue on Evntry.</p>
+  <div class="sub-band">
+    <div class="sub-header">
+      <h3>Evntry Fan Pass</h3>
+      <div class="price">Coming soon <span>/ month</span></div>
+    </div>
+    <div class="sub-body">
+      <ul class="sub-perks">
+        <li class="sub-perk"><span class="sub-perk-dot"></span><span><strong>Early ticket access</strong> — before public sale at every venue you follow</span></li>
+        <li class="sub-perk"><span class="sub-perk-dot"></span><span><strong>Subscriber discounts</strong> — selected events at a reduced price</span></li>
+        <li class="sub-perk"><span class="sub-perk-dot"></span><span><strong>Voting rights</strong> — influence the lineup at participating venues</span></li>
+        <li class="sub-perk"><span class="sub-perk-dot"></span><span><strong>Artist follow</strong> — track musicians across multiple venues</span></li>
+        <li class="sub-perk"><span class="sub-perk-dot"></span><span><strong>Gig discovery</strong> — personalised recommendations based on what you follow</span></li>
+      </ul>
+      <p class="sub-note">The fan subscription is in development. Leave your email and we'll tell you the price and launch date first.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Get your ticket</p>
+  <h2>Don't miss<br>another <em>sold-out</em><br>night.</h2>
+  <p class="section-sub">Browse live music, bar nights, and club events near you. Buy a ticket in seconds — no account needed.</p>
+  <div class="form-wrap" style="text-align:center;">
+    <a href="https://app.evntry.app" class="btn-primary" style="display:inline-block;text-decoration:none;padding:14px 28px;">Find events near you →</a>
+    <p class="form-note" style="text-align:center;">Free for fans. No account needed to buy a ticket.</p>
+  </div>
+</section>
+
+</main>
+</BaseLayout>

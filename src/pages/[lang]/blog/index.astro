@@ -1,0 +1,14 @@
+---
+// i18n blog index stubs — redirect to English blog until translations are ready
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'de' } },
+    { params: { lang: 'it' } },
+    { params: { lang: 'pl' } },
+    { params: { lang: 'hr' } },
+    { params: { lang: 'sl' } },
+  ];
+}
+
+return Astro.redirect('/blog/', 301);
+---

@@ -1,0 +1,56 @@
+---
+// i18n blog post pages — shows translated content when available, English otherwise
+import { getCollection } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const locales = ['de', 'it', 'pl', 'hr', 'sl'];
+  const paths = [];
+
+  for (const lang of locales) {
+    // Get translated posts for this locale if they exist
+    const translatedPosts = await getCollection('blog', ({ id }) => id.startsWith(`${lang}/`));
+    
+    if (translatedPosts.length > 0) {
+      for (const post of translatedPosts) {
+        paths.push({
+          params: { lang, slug: post.id.replace(`${lang}/`, '').replace('.mdx', '') },
+          props: { post, lang, translated: true },
+        });
+      }
+    } else {
+      // No translated posts yet — generate paths from English posts to avoid 404s
+      const enPosts = await getCollection('blog', ({ id }) => id.startsWith('en/'));
+      for (const post of enPosts) {
+        paths.push({
+          params: { lang, slug: post.id.replace('en/', '').replace('.mdx', '') },
+          props: { post, lang, translated: false },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { post, lang, translated } = Astro.props;
+
+// If not translated, redirect to English version
+if (!translated) {
+  const slug = post.id.replace('en/', '').replace('.mdx', '');
+  return Astro.redirect(`/blog/${slug}.html`, 301);
+}
+
+const { Content } = await post.render();
+const slug = post.id.replace(`${lang}/`, '').replace('.mdx', '');
+---
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tag={post.data.tag}
+  slug={slug}
+  lang={lang}
+>
+  <Content />
+</BlogPost>

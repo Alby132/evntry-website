@@ -1,0 +1,164 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tag: string;
+  slug: string;
+  lang?: string;
+}
+
+const { title, description, date, tag, slug, lang = 'en' } = Astro.props;
+
+const site = 'https://evntry.app';
+const ogImage = `${site}/og-image.png`;
+const canonical = lang === 'en'
+  ? `${site}/blog/${slug}.html`
+  : `${site}/${lang}/blog/${slug}.html`;
+const ogUrl = canonical;
+
+const displayDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const ldJson = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "url": canonical,
+  "datePublished": date.toISOString().split('T')[0],
+  "dateModified": date.toISOString().split('T')[0],
+  "author": { "@type": "Organization", "name": "Evntry" },
+  "publisher": { "@type": "Organization", "name": "Evntry", "url": site },
+  "image": ogImage,
+  "mainEntityOfPage": { "@type": "WebPage", "@id": canonical }
+};
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content={description}>
+<meta property="og:title" content={`${title} — Evntry Blog`}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogImage}>
+<meta property="og:url" content={ogUrl}>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Evntry">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={`${title} — Evntry Blog`}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogImage}>
+<title>{title} — Evntry Blog</title>
+<link rel="stylesheet" href="/fonts.css">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/shared.css">
+<link rel="canonical" href={canonical}>
+<script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+<style is:global>
+  /* ARTICLE LAYOUT */
+  .article-wrap { max-width: 720px; margin: 0 auto; padding: 110px 6vw 100px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 48px; transition: color 0.15s; }
+  .back-link:hover { color: var(--text); }
+  .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .post-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); padding: 3px 10px; border-radius: 20px; }
+  .post-date { font-size: 12px; color: var(--muted); }
+  .article-wrap h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(36px, 6vw, 64px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 24px; }
+  .article-wrap h1 em { font-style: italic; color: var(--accent); }
+  .article-intro { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 56px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
+  .article-body h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(22px, 3vw, 30px); text-transform: uppercase; margin: 48px 0 16px; letter-spacing: 0.01em; }
+  .article-body p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+  .article-body p strong { color: var(--text); font-weight: 600; }
+  .article-body ul, .article-body ol { margin: 0 0 24px 20px; }
+  .article-body li { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 8px; }
+  .article-body li strong { color: var(--text); font-weight: 600; }
+  .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 24px 28px; margin: 40px 0; }
+  .callout p { margin-bottom: 0; }
+  /* Platform cards (comparison post) */
+  .platform-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px 32px; margin: 32px 0; }
+  .platform-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 6px; color: var(--text); }
+  .platform-tag { font-size: 12px; color: var(--muted); display: block; margin-bottom: 16px; }
+  .platform-verdict { font-size: 14px; color: var(--accent); font-weight: 600; margin-top: 16px; margin-bottom: 0; }
+  /* Timeline steps (promotion post) */
+  .timeline-step { border-left: 2px solid var(--border); padding-left: 24px; margin: 36px 0; position: relative; }
+  .timeline-step::before { content: ''; position: absolute; left: -5px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .step-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .step-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; margin-bottom: 12px; color: var(--text); }
+  /* CTA block */
+  .article-cta { margin-top: 72px; padding: 48px 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: center; }
+  .article-cta h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(26px, 4vw, 40px); text-transform: uppercase; margin-bottom: 12px; }
+  .article-cta p { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+  .btn-primary { display: inline-block; background: var(--accent-btn); color: #fff; font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 15px; padding: 14px 28px; border-radius: 6px; transition: opacity 0.15s; text-decoration: none; }
+  .btn-primary:hover { opacity: 0.85; }
+  footer { padding: 32px 6vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); transition: color 0.15s; }
+  footer a:hover { color: var(--text); }
+  @media (max-width: 700px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .article-wrap { padding: 90px 5vw 80px; }
+    footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<Nav active="blog" />
+
+<main>
+<article class="article-wrap">
+  <a href="/blog.html" class="back-link">← All articles</a>
+  <div class="post-meta">
+    <span class="post-tag">{tag}</span>
+    <span class="post-date">{displayDate}</span>
+  </div>
+  <slot />
+</article>
+</main>
+
+<Footer />
+<ChatWidget />
+
+<!-- Cookie consent + GA4 -->
+<div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:16px 6vw;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:200;flex-wrap:wrap;">
+  <p style="font-size:13px;color:var(--muted);">We use cookies to understand how visitors use our site.</p>
+  <div id="cookie-actions" style="display:flex;gap:10px;">
+    <button id="cookie-accept" style="background:var(--accent-btn);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;cursor:pointer;">Accept</button>
+    <button id="cookie-decline" style="background:transparent;color:var(--muted);border:1px solid var(--border);padding:8px 18px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;cursor:pointer;">Decline</button>
+  </div>
+</div>
+<script>
+(function() {
+  var consent = localStorage.getItem('ga_consent');
+  var banner = document.getElementById('cookie-banner');
+  function loadGA() {
+    var s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T78BQ748F8';
+    s.async = true;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-T78BQ748F8');
+  }
+  if (consent === 'accepted') { if (banner) banner.style.display = 'none'; loadGA(); }
+  else if (consent === 'declined') { if (banner) banner.style.display = 'none'; }
+  else {
+    document.getElementById('cookie-accept').onclick = function() { localStorage.setItem('ga_consent','accepted'); banner.style.display='none'; loadGA(); };
+    document.getElementById('cookie-decline').onclick = function() { localStorage.setItem('ga_consent','declined'); banner.style.display='none'; };
+  }
+})();
+</script>
+<script>
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+</script>
+</body>
+</html>

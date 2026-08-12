@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqLd = [
+  { q: "Do fans pay any extra fees?", a: "No. The price you set is exactly what fans pay at checkout. Evntry never adds booking fees on the fan side. That's one of the reasons fans actually complete the purchase — no sticker shock at the end." },
+  { q: "Do I own my attendee data?", a: "Yes, completely. Your attendee list — names, emails, purchase history — belongs to you. You can export it anytime. We never share it with third parties or use it for our own marketing." },
+  { q: "How do I get paid?", a: "Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account — minus the Evntry fee (3% on the free plan, lower on custom) and Stripe's standard card processing fee (~1.4% + €0.25 for European cards). Payouts follow Stripe's normal schedule — typically 2–7 business days." },
+  { q: "Can I sell free tickets?", a: "Yes. Free events have no fees at all — no 3%, nothing. You can also mix free and paid tiers on the same event (e.g. free general entry, paid VIP table). Free ticket tiers are always free regardless of your plan." },
+  { q: "What if I only do a few events a year?", a: "Stay on the free plan. You pay 3% only when tickets actually sell — no monthly cost, no risk. Start free and reach out when you're ready to scale." },
+  { q: "How is the custom plan priced?", a: "It depends on how often you run events, how many tickets you sell, and what features you need. We work through it together — book a call and we'll put together a number that makes sense for your venue. No generic tiers, no surprises." },
+  { q: "Can I cancel anytime?", a: "Yes. Custom plans have no lock-in unless you've agreed to a fixed contract. Your events and attendee data always stay accessible." },
+  { q: "Is there a Stripe fee on top of the Evntry fee?", a: "Yes — Stripe charges their own payment processing fee separately (typically ~1.4% + €0.25 for European cards, higher for non-EU cards). This goes directly to Stripe, not to us. On the free plan the only fees are 3% (Evntry) + Stripe's processing fee. Custom plans can reduce or eliminate the Evntry portion." },
+  { q: "Is Evntry available in my country?", a: "Evntry is rolling out across Europe. Stripe payments work in all major European markets. If you're outside the EU, email us at hello@evntry.app and we'll let you know the timeline." },
+];
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqLd.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": { "@type": "Answer", "text": item.a }
+  }))
+}];
+---
+<BaseLayout
+  title="Pricing — Evntry"
+  description="Start free with 3% per ticket — no monthly fee, one event a month, no risk. Need more? Get a custom plan built around your venue."
+  ogTitle="Pricing — Evntry"
+  ogUrl="https://evntry.app/pricing.html"
+  canonical="https://evntry.app/pricing.html"
+  ldJson={ldJson}
+  activeNav="pricing"
+>
+
+<style is:global>
+  .hero { padding: 140px 6vw 80px; text-align: center; }
+  .hero .eyebrow, .cta-band .eyebrow { justify-content: center; }
+  .hero .eyebrow::after, .cta-band .eyebrow::after, .eyebrow.sym::after {
+    content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero h1 { font-size: clamp(56px, 9vw, 110px); text-align: center; max-width: 800px; margin: 0 auto 28px; }
+  .hero-sub { font-size: 18px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+  section { padding: 80px 6vw; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .plan { background: var(--surface); padding: 40px 32px 36px; display: flex; flex-direction: column; position: relative; }
+  .plan.featured { background: var(--surface2); }
+  .plan-badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 3px 8px; margin-bottom: 20px; align-self: flex-start; }
+  .plan-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); margin-bottom: 6px; line-height: 1; }
+  .plan-tagline { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; min-height: 58px; }
+  .plan-price { margin-bottom: 8px; display: flex; align-items: baseline; gap: 4px; }
+  .price-free { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 56px; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
+  .plan-fee { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .plan-fee strong { color: var(--text); font-weight: 600; }
+  .plan-features { list-style: none; margin: 0 0 32px; flex: 1; }
+  .plan-features li { font-size: 14px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--faint); display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
+  .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .plan-cta { display: block; text-align: center; padding: 13px 20px; border-radius: 8px; font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 15px; text-decoration: none; transition: opacity 0.15s; }
+  .plan-cta.primary { background: var(--accent-btn); color: #fff; }
+  .plan-cta.secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .plan-cta:hover { opacity: 0.8; }
+  .hero-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 700px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .plan-tagline { min-height: auto; }
+  }
+</style>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Simple pricing</p>
+  <h1>Pay as you<br>grow. Or <em>don't.</em></h1>
+  <p class="hero-sub">Start with one free event a month. When you're ready to grow, we'll build a plan around your venue.</p>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="pricing-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:720px;">
+    <div class="plan">
+      <div class="plan-badge" style="visibility:hidden">placeholder</div>
+      <div class="plan-name">Free</div>
+      <div class="plan-tagline">Start selling tickets today. One event a month, no risk.</div>
+      <div class="plan-price">
+        <span class="price-free">Free</span>
+      </div>
+      <ul class="plan-features">
+        <li>1 event per month</li>
+        <li>QR code door scanning</li>
+        <li>Stripe payments (fans pay no extra fees)</li>
+        <li>Email ticket confirmation</li>
+        <li>Live ticket tracking</li>
+        <li>Shareable ticket link</li>
+      </ul>
+      <a href="https://app.evntry.app" class="plan-cta secondary">Start free →</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">Custom</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-tagline">Pricing matched to your venue — events per month, capacity, and how you grow.</div>
+      <div class="plan-price">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--muted);letter-spacing:-0.01em;line-height:1;">Let's talk</span>
+      </div>
+      <div class="plan-fee"><strong>3%</strong> per ticket &nbsp;·&nbsp; Custom contract</div>
+      <ul class="plan-features">
+        <li>Everything in Free</li>
+        <li>Unlimited events</li>
+        <li>Email blasts to ticket holders</li>
+        <li>Event cover images</li>
+        <li>Priority support</li>
+        <li>Dedicated account manager</li>
+        <li>Custom contract &amp; invoicing</li>
+        <li>Volume-based fee reduction</li>
+      </ul>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="plan-cta primary">Book a call →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow sym" style="justify-content:center;">Questions</p>
+  <h2 style="text-align:center;margin-bottom:52px;">The obvious<br><em>answers.</em></h2>
+  <div class="faq-list">
+    {faqLd.map(item => (
+      <div class="faq-item">
+        <div class="faq-q">{item.q}</div>
+        <div class="faq-a" set:html={item.a.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Get started</p>
+  <h2>Start free.<br><em>Scale when ready.</em></h2>
+  <p class="section-sub">One event a month, no risk. When you're ready for more, we'll build a plan around your venue.</p>
+  <div class="form-wrap">
+    <div class="hero-cta-row">
+      <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Create free account →</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Book a 30-min call</a>
+    </div>
+    <p class="form-note" style="text-align:center;margin-top:14px;">No credit card required. No commitment.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() { q.closest('.faq-item').classList.toggle('open'); });
+  });
+</script>
+</BaseLayout>

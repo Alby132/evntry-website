@@ -1,0 +1,125 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogUrl?: string;
+  ogType?: string;
+  canonical?: string;
+  robots?: string;
+  ldJson?: object[];
+  activeNav?: string;
+  preloadImage?: string;
+  fanStyle?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogTitle,
+  ogDescription,
+  ogUrl,
+  ogType = 'website',
+  canonical,
+  robots = 'index, follow',
+  ldJson,
+  activeNav,
+  preloadImage,
+  fanStyle = false,
+} = Astro.props;
+
+const site = 'https://evntry.app';
+const ogImage = `${site}/og-image.png`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content={robots}>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content={description}>
+<meta property="og:title" content={ogTitle || title}>
+<meta property="og:description" content={ogDescription || description}>
+<meta property="og:image" content={ogImage}>
+<meta property="og:url" content={ogUrl || `${site}/`}>
+<meta property="og:type" content={ogType}>
+<meta property="og:site_name" content="Evntry">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={ogTitle || title}>
+<meta name="twitter:description" content={ogDescription || description}>
+<meta name="twitter:image" content={ogImage}>
+<title>{title}</title>
+{preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high">}
+<link rel="preload" as="font" type="font/woff2" href="/fonts/HTxwL3I-JCGChYJ8VI-L6OO_au7B47b1_3E.woff2" crossorigin>
+<link rel="stylesheet" href="/fonts.css">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/shared.css">
+{canonical && <link rel="canonical" href={canonical}>}
+{ldJson && ldJson.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
+</head>
+<body>
+<Nav active={activeNav} fanStyle={fanStyle} />
+<slot />
+<Footer />
+<ChatWidget />
+
+<!-- Cookie consent + GA4 -->
+<div id="cookie-banner">
+  <p>We use cookies to understand how visitors use our site.</p>
+  <div id="cookie-actions">
+    <button id="cookie-accept">Accept</button>
+    <button id="cookie-decline">Decline</button>
+  </div>
+</div>
+<script>
+(function() {
+  var consent = localStorage.getItem('ga_consent');
+  var banner = document.getElementById('cookie-banner');
+  function loadGA() {
+    var s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-T78BQ748F8';
+    s.async = true;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-T78BQ748F8');
+  }
+  if (consent === 'accepted') {
+    if (banner) banner.style.display = 'none';
+    loadGA();
+  } else if (consent === 'declined') {
+    if (banner) banner.style.display = 'none';
+  } else {
+    document.getElementById('cookie-accept').onclick = function() {
+      localStorage.setItem('ga_consent', 'accepted');
+      banner.style.display = 'none';
+      loadGA();
+    };
+    document.getElementById('cookie-decline').onclick = function() {
+      localStorage.setItem('ga_consent', 'declined');
+      banner.style.display = 'none';
+    };
+  }
+})();
+</script>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+</script>
+</body>
+</html>
