@@ -1,10 +1,7 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "evntry-website",
   "compatibility_date": "2026-05-21",
-  "observability": {
-    "enabled": true
-  },
+  "main": "./src/worker.js",
   "assets": {
     "directory": "./dist"
   },
