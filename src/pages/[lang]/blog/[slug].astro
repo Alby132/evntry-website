@@ -38,7 +38,7 @@ const { post, lang, translated } = Astro.props;
 // If not translated, redirect to English version
 if (!translated) {
   const slug = post.id.replace('en/', '').replace('.mdx', '');
-  return Astro.redirect(`/blog/${slug}.html`, 301);
+  return Astro.redirect(`/blog/${slug}`, 301);
 }
 
 const { Content } = await post.render();

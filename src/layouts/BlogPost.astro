@@ -17,8 +17,8 @@ const { title, description, date, tag, slug, lang = 'en' } = Astro.props;
 const site = 'https://evntry.app';
 const ogImage = `${site}/og-image.png`;
 const canonical = lang === 'en'
-  ? `${site}/blog/${slug}.html`
-  : `${site}/${lang}/blog/${slug}.html`;
+  ? `${site}/blog/${slug}`
+  : `${site}/${lang}/blog/${slug}`;
 const ogUrl = canonical;
 
 const displayDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
