@@ -64,7 +64,7 @@ const ldJson = [{
       const slug = post.id.replace('en/', '').replace('.mdx', '');
       const displayDate = post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       return (
-        <a href={`/blog/${slug}.html`} class="post-card">
+        <a href={`/blog/${slug}`} class="post-card">
           <div class="post-card-tag">{post.data.tag}</div>
           <h2>{post.data.title}</h2>
           <p>{post.data.description}</p>
