@@ -10,9 +10,10 @@ interface Props {
   tag: string;
   slug: string;
   lang?: string;
+  readTime?: number;
 }
 
-const { title, description, date, tag, slug, lang = 'en' } = Astro.props;
+const { title, description, date, tag, slug, lang = 'en', readTime } = Astro.props;
 
 const site = 'https://evntry.app';
 const ogImage = `${site}/og-image.png`;
@@ -62,48 +63,247 @@ const ldJson = {
 <link rel="canonical" href={canonical}>
 <script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
 <style is:global>
-  /* ARTICLE LAYOUT */
-  .article-wrap { max-width: 720px; margin: 0 auto; padding: 110px 6vw 100px; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 48px; transition: color 0.15s; }
+  /* ── ARTICLE SHELL ─────────────────────────────────────────── */
+  .article-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 110px 40px 120px;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    transition: color 0.15s;
+  }
   .back-link:hover { color: var(--text); }
-  .post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .post-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); padding: 3px 10px; border-radius: 20px; }
+
+  /* Meta row: tag · date · read time */
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .post-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
   .post-date { font-size: 12px; color: var(--muted); }
-  .article-wrap h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(36px, 6vw, 64px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 24px; }
-  .article-wrap h1 em { font-style: italic; color: var(--accent); }
-  .article-intro { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 56px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
-  .article-body h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(22px, 3vw, 30px); text-transform: uppercase; margin: 48px 0 16px; letter-spacing: 0.01em; }
-  .article-body p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+  .post-read-time { font-size: 12px; color: var(--muted); }
+  .meta-dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* ── ARTICLE TITLE (H1) ────────────────────────────────────── */
+  .article-wrap > h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+  .article-wrap > h1 em { font-style: italic; color: var(--accent); }
+
+  /* ── ARTICLE BODY ──────────────────────────────────────────── */
+  /* Lead paragraph — first <p> gets bigger treatment + separator */
+  .article-body > p:first-child {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Body paragraphs */
+  .article-body > p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 24px;
+  }
   .article-body p strong { color: var(--text); font-weight: 600; }
-  .article-body ul, .article-body ol { margin: 0 0 24px 20px; }
-  .article-body li { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 8px; }
+
+  /* H2 section headings — readable, left orange accent, no uppercase */
+  .article-body h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin: 52px 0 16px;
+    padding-left: 14px;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* H3 headings — FAQ questions, inline callouts */
+  .article-body h3 {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin: 36px 0 10px;
+  }
+
+  /* Horizontal rule — section break between article and FAQ */
+  .article-body hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 64px 0;
+  }
+
+  /* Lists */
+  .article-body ul,
+  .article-body ol { margin: 0 0 24px 22px; }
+  .article-body li {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
   .article-body li strong { color: var(--text); font-weight: 600; }
-  .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 24px 28px; margin: 40px 0; }
-  .callout p { margin-bottom: 0; }
-  /* Platform cards (comparison post) */
-  .platform-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px 32px; margin: 32px 0; }
-  .platform-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 6px; color: var(--text); }
+
+  /* Blockquote */
+  .article-body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 20px;
+    margin: 32px 0;
+  }
+  .article-body blockquote p { font-size: 17px; color: var(--muted); margin-bottom: 0; }
+
+  /* ── CALLOUT & CARD COMPONENTS ─────────────────────────────── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 40px 0;
+  }
+  .callout p { margin-bottom: 0 !important; }
+
+  /* Platform comparison cards */
+  .platform-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .platform-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
   .platform-tag { font-size: 12px; color: var(--muted); display: block; margin-bottom: 16px; }
   .platform-verdict { font-size: 14px; color: var(--accent); font-weight: 600; margin-top: 16px; margin-bottom: 0; }
-  /* Timeline steps (promotion post) */
-  .timeline-step { border-left: 2px solid var(--border); padding-left: 24px; margin: 36px 0; position: relative; }
-  .timeline-step::before { content: ''; position: absolute; left: -5px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-  .step-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-  .step-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; text-transform: uppercase; margin-bottom: 12px; color: var(--text); }
-  /* CTA block */
-  .article-cta { margin-top: 72px; padding: 48px 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: center; }
-  .article-cta h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(26px, 4vw, 40px); text-transform: uppercase; margin-bottom: 12px; }
-  .article-cta p { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
-  .btn-primary { display: inline-block; background: var(--accent-btn); color: #fff; font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 15px; padding: 14px 28px; border-radius: 6px; transition: opacity 0.15s; text-decoration: none; }
+
+  /* Timeline steps */
+  .timeline-step {
+    border-left: 2px solid var(--border);
+    padding-left: 24px;
+    margin: 36px 0;
+    position: relative;
+  }
+  .timeline-step::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .step-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  /* ── CTA BLOCK ──────────────────────────────────────────────── */
+  .article-cta {
+    margin-top: 72px;
+    padding: 48px 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .article-cta h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 4vw, 40px);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .article-cta p { font-size: 15px; color: var(--muted); margin-bottom: 24px !important; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent-btn);
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 6px;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
   .btn-primary:hover { opacity: 0.85; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────── */
   footer { padding: 32px 6vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   footer p { font-size: 13px; color: var(--muted); }
   footer a { color: var(--muted); transition: color 0.15s; }
   footer a:hover { color: var(--text); }
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────── */
   @media (max-width: 700px) {
     .nav-link, .nav-cta { display: none; }
     .hamburger { display: flex; }
-    .article-wrap { padding: 90px 5vw 80px; }
+    .article-wrap { padding: 88px 20px 80px; }
+    .article-body > p:first-child { font-size: 17px; }
+    .article-body h2 { font-size: 22px; margin-top: 40px; }
+    .article-cta { padding: 36px 24px; }
     footer { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>
@@ -114,23 +314,35 @@ const ldJson = {
 <main>
 <article class="article-wrap">
   <a href="/blog" class="back-link">← All articles</a>
+
   <div class="post-meta">
     <span class="post-tag">{tag}</span>
+    <span class="meta-dot"></span>
     <span class="post-date">{displayDate}</span>
+    {readTime && (
+      <>
+        <span class="meta-dot"></span>
+        <span class="post-read-time">{readTime} min read</span>
+      </>
+    )}
   </div>
-  <slot />
+
+  <h1>{title}</h1>
+
+  <div class="article-body">
+    <slot />
+  </div>
 </article>
 </main>
 
 <Footer />
 <ChatWidget />
 
-<!-- Cookie consent + GA4 -->
-<div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:16px 6vw;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:200;flex-wrap:wrap;">
-  <p style="font-size:13px;color:var(--muted);">We use cookies to understand how visitors use our site.</p>
-  <div id="cookie-actions" style="display:flex;gap:10px;">
-    <button id="cookie-accept" style="background:var(--accent-btn);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;cursor:pointer;">Accept</button>
-    <button id="cookie-decline" style="background:transparent;color:var(--muted);border:1px solid var(--border);padding:8px 18px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;cursor:pointer;">Decline</button>
+<div id="cookie-banner">
+  <p>We use cookies to understand how visitors use our site.</p>
+  <div id="cookie-actions">
+    <button id="cookie-accept">Accept</button>
+    <button id="cookie-decline">Decline</button>
   </div>
 </div>
 <script>

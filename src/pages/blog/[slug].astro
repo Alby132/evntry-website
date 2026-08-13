@@ -13,6 +13,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const slug = post.id.replace('en/', '').replace('.mdx', '');
+
+// Estimate read time: ~200 words per minute
+const wordCount = post.body.split(/\s+/).filter(Boolean).length;
+const readTime = Math.max(1, Math.ceil(wordCount / 200));
 ---
 <BlogPost
   title={post.data.title}
@@ -21,6 +25,7 @@ const slug = post.id.replace('en/', '').replace('.mdx', '');
   tag={post.data.tag}
   slug={slug}
   lang="en"
+  readTime={readTime}
 >
   <Content />
 </BlogPost>
