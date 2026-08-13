@@ -8,7 +8,7 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "custom_domains": [
-    { "pattern": "evntry.app", "zone_id": "caff73e0bf93efd87c3740f85643c712" }
+  "routes": [
+    { "pattern": "evntry.app/*", "zone_id": "caff73e0bf93efd87c3740f85643c712" }
   ]
 }
