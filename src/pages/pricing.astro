@@ -4,12 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const faqLd = [
   { q: "Do fans pay any extra fees?", a: "No. The price you set is exactly what fans pay at checkout. Evntry never adds booking fees on the fan side. That's one of the reasons fans actually complete the purchase — no sticker shock at the end." },
   { q: "Do I own my attendee data?", a: "Yes, completely. Your attendee list — names, emails, purchase history — belongs to you. You can export it anytime. We never share it with third parties or use it for our own marketing." },
-  { q: "How do I get paid?", a: "Directly through Stripe. When a fan buys a ticket, the revenue goes to your connected Stripe account — minus the Evntry fee (3% on the free plan, lower on custom) and Stripe's standard card processing fee (~1.4% + €0.25 for European cards). Payouts follow Stripe's normal schedule — typically 2–7 business days." },
-  { q: "Can I sell free tickets?", a: "Yes. Free events have no fees at all — no 3%, nothing. You can also mix free and paid tiers on the same event (e.g. free general entry, paid VIP table). Free ticket tiers are always free regardless of your plan." },
-  { q: "What if I only do a few events a year?", a: "Stay on the free plan. You pay 3% only when tickets actually sell — no monthly cost, no risk. Start free and reach out when you're ready to scale." },
-  { q: "How is the custom plan priced?", a: "It depends on how often you run events, how many tickets you sell, and what features you need. We work through it together — book a call and we'll put together a number that makes sense for your venue. No generic tiers, no surprises." },
-  { q: "Can I cancel anytime?", a: "Yes. Custom plans have no lock-in unless you've agreed to a fixed contract. Your events and attendee data always stay accessible." },
-  { q: "Is there a Stripe fee on top of the Evntry fee?", a: "Yes — Stripe charges their own payment processing fee separately (typically ~1.4% + €0.25 for European cards, higher for non-EU cards). This goes directly to Stripe, not to us. On the free plan the only fees are 3% (Evntry) + Stripe's processing fee. Custom plans can reduce or eliminate the Evntry portion." },
+  { q: "How do I get paid?", a: "Directly through Stripe. For paid tickets, connect your Stripe payout account before publishing. Standard Stripe payment-processing fees are paid by the venue, and payouts follow Stripe's normal schedule." },
+  { q: "Can my free event have paid tickets?", a: "Yes. Your first published event can use free tickets, paid tickets, or both. Evntry charges a 0% platform fee on that event. Standard Stripe processing fees still apply to paid tickets." },
+  { q: "When is my free event used?", a: "Your allowance is used when your first event is published. Drafts do not count. Cancelling or deleting the published event does not grant another free event." },
+  { q: "What happens after my first event?", a: "Contact Evntry about Pro before publishing another event. Pro includes unlimited published events, with pricing agreed individually for your venue and event volume." },
+  { q: "How is Pro priced?", a: "Pro uses custom pricing based on your venue's needs and event volume. Book a call and we'll agree on a plan that fits your operation." },
+  { q: "Does Stripe charge a separate fee?", a: "Yes. Stripe's standard payment-processing fees apply to paid tickets and are paid by the venue. They are separate from Evntry's platform fee." },
   { q: "Is Evntry available in my country?", a: "Evntry is rolling out across Europe. Stripe payments work in all major European markets. If you're outside the EU, email us at hello@evntry.app and we'll let you know the timeline." },
 ];
 
@@ -25,7 +25,7 @@ const ldJson = [{
 ---
 <BaseLayout
   title="Pricing — Evntry"
-  description="Start free with 3% per ticket — no monthly fee, one event a month, no risk. Need more? Get a custom plan built around your venue."
+  description="Run your first published event with a 0% Evntry platform fee. Then choose custom Pro pricing tailored to your venue and event volume."
   ogTitle="Pricing — Evntry"
   ogUrl="https://evntry.app/pricing"
   canonical="https://evntry.app/pricing"
@@ -62,6 +62,7 @@ const ldJson = [{
   .price-free { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 56px; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
   .plan-fee { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
   .plan-fee strong { color: var(--text); font-weight: 600; }
+  .plan-note { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 14px 0 0; }
   .plan-features { list-style: none; margin: 0 0 32px; flex: 1; }
   .plan-features li { font-size: 14px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--faint); display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
   .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
@@ -83,7 +84,7 @@ const ldJson = [{
 <section class="hero">
   <p class="eyebrow">Simple pricing</p>
   <h1>Pay as you<br>grow. Or <em>don't.</em></h1>
-  <p class="hero-sub">Start with one free event a month. When you're ready to grow, we'll build a plan around your venue.</p>
+  <p class="hero-sub">Your first published event is on us. When you're ready to run more, we'll tailor Pro to your venue.</p>
 </section>
 
 <div class="divider"></div>
@@ -93,39 +94,43 @@ const ldJson = [{
     <div class="plan">
       <div class="plan-badge" style="visibility:hidden">placeholder</div>
       <div class="plan-name">Free</div>
-      <div class="plan-tagline">Start selling tickets today. One event a month, no risk.</div>
+      <div class="plan-tagline">Your first event is on us.</div>
       <div class="plan-price">
         <span class="price-free">Free</span>
       </div>
+      <div class="plan-fee">Run your first published event—free or paid—with <strong>no Evntry platform fee.</strong></div>
       <ul class="plan-features">
-        <li>1 event per month</li>
+        <li>Your first published event</li>
+        <li>Free or paid ticketing</li>
+        <li>0% Evntry platform fee</li>
         <li>QR code door scanning</li>
-        <li>Stripe payments (fans pay no extra fees)</li>
-        <li>Email ticket confirmation</li>
+        <li>Email ticket delivery</li>
         <li>Live ticket tracking</li>
-        <li>Shareable ticket link</li>
+        <li>Shareable event and ticket links</li>
+        <li>Event cover image</li>
       </ul>
-      <a href="https://app.evntry.app" class="plan-cta secondary">Start free →</a>
+      <a href="https://app.evntry.app" class="plan-cta secondary">Start free</a>
+      <p class="plan-note">Standard Stripe processing fees apply to paid tickets. A connected Stripe account is required to receive payouts.</p>
     </div>
     <div class="plan featured">
       <div class="plan-badge">Custom</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-tagline">Pricing matched to your venue — events per month, capacity, and how you grow.</div>
+      <div class="plan-tagline">For venues ready to run more events and grow.</div>
       <div class="plan-price">
-        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--muted);letter-spacing:-0.01em;line-height:1;">Let's talk</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--muted);letter-spacing:-0.01em;line-height:1;">Let’s talk</span>
       </div>
-      <div class="plan-fee"><strong>3%</strong> per ticket &nbsp;·&nbsp; Custom contract</div>
+      <div class="plan-fee">Custom pricing tailored to your venue and event volume.</div>
       <ul class="plan-features">
         <li>Everything in Free</li>
-        <li>Unlimited events</li>
+        <li>Unlimited published events</li>
+        <li>Paid ticketing through Stripe</li>
         <li>Email blasts to ticket holders</li>
-        <li>Event cover images</li>
-        <li>Priority support</li>
-        <li>Dedicated account manager</li>
-        <li>Custom contract &amp; invoicing</li>
-        <li>Volume-based fee reduction</li>
+        <li>Full analytics dashboard</li>
+        <li>Promo codes and discounts</li>
+        <li>Venue gallery and video</li>
+        <li>Custom contract and volume pricing</li>
       </ul>
-      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="plan-cta primary">Book a call →</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="plan-cta primary">Book a call</a>
     </div>
   </div>
 </section>
@@ -148,7 +153,7 @@ const ldJson = [{
 <section class="cta-band">
   <p class="eyebrow">Get started</p>
   <h2>Start free.<br><em>Scale when ready.</em></h2>
-  <p class="section-sub">One event a month, no risk. When you're ready for more, we'll build a plan around your venue.</p>
+  <p class="section-sub">Publish your first event with a 0% Evntry platform fee. Book a call when you're ready for more.</p>
   <div class="form-wrap">
     <div class="hero-cta-row">
       <a href="https://app.evntry.app" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Create free account →</a>

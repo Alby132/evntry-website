@@ -46,7 +46,7 @@ lang: en
 | `lang` | string | ✅ | Always `en` for English articles. |
 | `ogTitle` | string | ❌ optional | Override the social/OG title only if it needs to differ from `title`. Omit when not needed. |
 
-> **Pricing in frontmatter or body:** Never hardcode a subscription price without verifying it's current. Pricing has shifted before (€49/month → discussions of €99–199/month). Wrong numbers in published posts are a credibility problem. Check with Alberto before including any specific figure.
+> **Pricing in frontmatter or body:** The finalized model is one free published event with a 0% Evntry platform fee, followed by Pro with custom pricing. Paid tickets require Stripe and standard Stripe processing fees still apply. Never advertise a fixed Pro price or percentage, and never describe the Free plan as recurring or as a trial.
 
 ---
 
