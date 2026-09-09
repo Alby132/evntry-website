@@ -2,6 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ChatWidget from '../components/ChatWidget.astro';
+import '../styles/shared.css';
 
 interface Props {
   title: string;
@@ -59,7 +60,6 @@ const ogImage = `${site}/og-image.png`;
 <link rel="stylesheet" href="/fonts.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
-<link rel="stylesheet" href="/shared.css?v=20260909-mobile">
 {canonical && <link rel="canonical" href={canonical}>}
 {ldJson && ldJson.map((schema) => (
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
