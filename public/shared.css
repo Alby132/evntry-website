@@ -643,7 +643,9 @@
     .compare-row { font-size: 12px; padding: 12px 14px; gap: 8px; grid-template-columns: 1.5fr 0.8fr 0.8fr 0.8fr; }
 
     /* Testimonials — stack */
-    .testimonial-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
+    .testimonial-card { padding: 20px 18px; gap: 14px; }
+    .testimonial-text { font-size: 14px; line-height: 1.55; }
 
     /* Email row: stack */
     .email-row { flex-direction: column; }
