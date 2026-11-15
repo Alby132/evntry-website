@@ -17,6 +17,8 @@ interface Props {
   activeNav?: string;
   preloadImage?: string;
   fanStyle?: boolean;
+  lang?: string;
+  alternates?: { hreflang: string; href: string }[];
 }
 
 const {
@@ -32,13 +34,15 @@ const {
   activeNav,
   preloadImage,
   fanStyle = false,
+  lang = 'en',
+  alternates,
 } = Astro.props;
 
 const site = 'https://evntry.app';
 const ogImage = `${site}/og-image.png`;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
 <meta charset="UTF-8">
 <meta name="robots" content={robots}>
@@ -61,22 +65,25 @@ const ogImage = `${site}/og-image.png`;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 {canonical && <link rel="canonical" href={canonical}>}
+{alternates && alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+))}
 {ldJson && ldJson.map((schema) => (
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}
 </head>
 <body>
-<Nav active={activeNav} fanStyle={fanStyle} />
+<Nav active={activeNav} fanStyle={fanStyle} lang={lang} />
 <slot />
-<Footer />
+<Footer lang={lang} />
 <ChatWidget />
 
 <!-- Cookie consent + GA4 -->
 <div id="cookie-banner">
-  <p>We use cookies to understand how visitors use our site.</p>
+  <p>{lang === 'hr' ? 'Koristimo kolačiće kako bismo razumjeli kako posjetitelji koriste stranicu.' : 'We use cookies to understand how visitors use our site.'}</p>
   <div id="cookie-actions">
-    <button id="cookie-accept">Accept</button>
-    <button id="cookie-decline">Decline</button>
+    <button id="cookie-accept">{lang === 'hr' ? 'Prihvati' : 'Accept'}</button>
+    <button id="cookie-decline">{lang === 'hr' ? 'Odbij' : 'Decline'}</button>
   </div>
 </div>
 <script>

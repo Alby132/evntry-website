@@ -2,27 +2,37 @@
 interface Props {
   active?: string;
   fanStyle?: boolean;
+  lang?: string;
 }
-const { active, fanStyle = false } = Astro.props;
+const { active, fanStyle = false, lang = 'en' } = Astro.props;
+const hr = lang === 'hr';
+const t = {
+  pricing: hr ? 'Cijene' : 'Pricing',
+  how: hr ? 'Kako funkcionira' : 'How it works',
+  howHref: hr ? '/hr#how-it-works' : '/#how-it-works',
+  about: hr ? 'O nama' : 'About',
+  start: hr ? 'Počnite besplatno' : 'Start free',
+  home: hr ? '/hr' : '/',
+};
 ---
 <nav>
-  <a href="/" class="logo">EVN<span>T</span>RY</a>
+  <a href={t.home} class="logo">EVN<span>T</span>RY</a>
   <div class="nav-right">
-    <a href="/pricing" class={`nav-link${active === 'pricing' ? ' active' : ''}`}>Pricing</a>
-    <a href="/#how-it-works" class="nav-link">How it works</a>
-    <a href="/about" class={`nav-link${active === 'about' ? ' active' : ''}`}>About</a>
-    <a href="https://app.evntry.app/register" class="nav-cta" style="text-decoration:none;">Start free</a>
+    <a href="/pricing" class={`nav-link${active === 'pricing' ? ' active' : ''}`}>{t.pricing}</a>
+    <a href={t.howHref} class="nav-link">{t.how}</a>
+    <a href="/about" class={`nav-link${active === 'about' ? ' active' : ''}`}>{t.about}</a>
+    <a href="https://app.evntry.app/register" class="nav-cta" style="text-decoration:none;">{t.start}</a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/pricing">Pricing</a>
-  <a href="/#how-it-works" onclick="closeMenu()">How it works</a>
-  <a href="/about">About</a>
+  <a href="/pricing">{t.pricing}</a>
+  <a href={t.howHref} onclick="closeMenu()">{t.how}</a>
+  <a href="/about">{t.about}</a>
   <a href="/blog">Blog</a>
-  <a href="https://app.evntry.app/register" class="mob-cta" onclick="closeMenu()">Start free</a>
+  <a href="https://app.evntry.app/register" class="mob-cta" onclick="closeMenu()">{t.start}</a>
 </div>
 
 {fanStyle && (
