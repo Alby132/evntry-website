@@ -763,3 +763,15 @@
   @media (max-width: 680px) {
     #cookie-banner { flex-direction: column; align-items: flex-start; padding: 14px 5vw; }
   }
+
+
+/* Comparison table — stacked rows on small phones */
+@media (max-width: 600px) {
+  .compare-row { grid-template-columns: repeat(3, 1fr); gap: 6px 10px; padding: 12px 14px; font-size: 13px; }
+  .compare-row .compare-feature { grid-column: 1 / -1; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .compare-header > span:first-child { display: none; }
+}
+
+/* Keep the bottom of the screen clear while the cookie banner is open */
+body.cookie-open #evntry-chat-bubble,
+body.cookie-open #sticky-cta { display: none !important; }

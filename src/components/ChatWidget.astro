@@ -137,7 +137,7 @@
     })
     .catch(function() {
       typing.className = 'evntry-msg bot';
-      typing.textContent = "Couldn't connect. Email hello@evntry.app and we'll help you out.";
+      typing.textContent = "Chat is offline right now. Email hello@evntry.app or book a 30-min call at calendly.com/hello-evntry and we'll help you out.";
       msgsEl.scrollTop = msgsEl.scrollHeight;
     })
     .finally(function() { sending = false; });

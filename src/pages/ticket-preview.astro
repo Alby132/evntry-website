@@ -160,7 +160,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="meta-icon" aria-hidden="true">◷</span>
             <div>
               <span class="meta-label">Date &amp; time</span>
-              <span class="meta-value">Friday, 24 October · Doors at 19:30</span>
+              <span class="meta-value" id="preview-date">Friday · Doors at 19:30</span>
             </div>
           </div>
           <div class="meta-row">
@@ -196,4 +196,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <a href="/pricing" class="btn-secondary">See pricing</a>
   </div>
 </main>
+<script>
+  // Always show the next Friday so the example never looks out of date
+  (function () {
+    var el = document.getElementById('preview-date');
+    if (!el) return;
+    var d = new Date();
+    d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7 || 7));
+    el.textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + ' · Doors at 19:30';
+  })();
+</script>
 </BaseLayout>

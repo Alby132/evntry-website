@@ -9,10 +9,8 @@ const { active, fanStyle = false } = Astro.props;
   <a href="/" class="logo">EVN<span>T</span>RY</a>
   <div class="nav-right">
     <a href="/pricing" class={`nav-link${active === 'pricing' ? ' active' : ''}`}>Pricing</a>
-    <a href="/fans" class={`nav-link${active === 'fans' ? ' active' : ''}`}>For fans</a>
-    <a href="/musicians" class={`nav-link${active === 'musicians' ? ' active' : ''}`}>For musicians</a>
+    <a href="/#how-it-works" class="nav-link">How it works</a>
     <a href="/about" class={`nav-link${active === 'about' ? ' active' : ''}`}>About</a>
-    <a href="/blog" class={`nav-link${active === 'blog' ? ' active' : ''}`}>Blog</a>
     <a href="https://app.evntry.app/register" class="nav-cta" style="text-decoration:none;">Start free</a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -21,8 +19,7 @@ const { active, fanStyle = false } = Astro.props;
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="/pricing">Pricing</a>
-  <a href="/fans">For fans</a>
-  <a href="/musicians">For musicians</a>
+  <a href="/#how-it-works" onclick="closeMenu()">How it works</a>
   <a href="/about">About</a>
   <a href="/blog">Blog</a>
   <a href="https://app.evntry.app/register" class="mob-cta" onclick="closeMenu()">Start free</a>

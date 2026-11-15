@@ -2,32 +2,16 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
+// English only for now. Add locales back here when a translated page exists.
 export default defineConfig({
   site: 'https://evntry.app',
   build: {
     format: 'file',
   },
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de', 'it', 'pl', 'hr', 'sl'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
   integrations: [
     mdx(),
     sitemap({
-      i18n: {
-        defaultLocale: 'en',
-        locales: {
-          en: 'en-GB',
-          de: 'de-DE',
-          it: 'it-IT',
-          pl: 'pl-PL',
-          hr: 'hr-HR',
-          sl: 'sl-SI',
-        },
-      },
+      filter: (page) => !page.includes('/404'),
     }),
   ],
 });

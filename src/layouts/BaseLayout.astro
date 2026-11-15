@@ -100,16 +100,32 @@ const ogImage = `${site}/og-image.png`;
   } else if (consent === 'declined') {
     if (banner) banner.style.display = 'none';
   } else {
+    document.body.classList.add('cookie-open');
     document.getElementById('cookie-accept').onclick = function() {
       localStorage.setItem('ga_consent', 'accepted');
       banner.style.display = 'none';
+      document.body.classList.remove('cookie-open');
       loadGA();
     };
     document.getElementById('cookie-decline').onclick = function() {
       localStorage.setItem('ga_consent', 'declined');
       banner.style.display = 'none';
+      document.body.classList.remove('cookie-open');
     };
   }
+
+  // Conversion events (only sent if analytics consent was given)
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || typeof window.gtag !== 'function') return;
+    var href = a.getAttribute('href') || '';
+    var label = (a.textContent || '').trim().slice(0, 60);
+    if (href.indexOf('app.evntry.app/register') !== -1) {
+      window.gtag('event', 'sign_up_click', { link_text: label, page_path: location.pathname });
+    } else if (href.indexOf('calendly.com') !== -1) {
+      window.gtag('event', 'book_call_click', { link_text: label, page_path: location.pathname });
+    }
+  });
 })();
 </script>
 

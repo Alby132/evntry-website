@@ -14,7 +14,7 @@ const ldJson = [
     "@type": "Organization",
     "name": "Evntry",
     "url": "https://evntry.app",
-    "logo": "https://evntry.app/favicon.svg",
+    "logo": "https://evntry.app/logo.png",
     "description": "Simple ticketing for independent venue owners. Set up an event in minutes, sell tickets with zero fees to fans, and scan the door from your phone.",
     "contactPoint": { "@type": "ContactPoint", "email": "hello@evntry.app", "contactType": "customer support" },
     "sameAs": ["https://instagram.com/evntry.app"]
@@ -199,7 +199,8 @@ const ldJson = [
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; padding: 100px 5vw 60px; }
     .hero::after { display: none; }
-    .app-preview { display: none; }
+    .app-preview { justify-self: stretch; width: 100%; padding: 10px; border-radius: 14px; }
+    .app-preview-footer { flex-wrap: wrap; gap: 6px 14px; }
   }
   @media (max-width: 680px) {
     .nav-link, .nav-cta { display: none; }
@@ -225,9 +226,9 @@ const ldJson = [
       <p class="form-note">Free to start. No credit card needed. &nbsp;·&nbsp; <a href="/ticket-preview" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(255,92,26,0.35);padding-bottom:1px;">See what a ticket page looks like →</a></p>
       <div class="hero-pricing" aria-label="Evntry pricing overview">
         <div class="hero-price-item">
-          <span class="hero-price-label">Free</span>
-          <span class="hero-price-main">Your first published event</span>
-          <span class="hero-price-detail">Free or paid tickets · 0% Evntry platform fee</span>
+          <span class="hero-price-label">First event free</span>
+          <span class="hero-price-main">Free or paid tickets</span>
+          <span class="hero-price-detail">0% Evntry platform fee on your first event</span>
         </div>
         <div class="hero-price-item">
           <span class="hero-price-label">Pro</span>
@@ -269,7 +270,7 @@ const ldJson = [
   <span class="feature-strip-item">Set up in 5 minutes</span>
   <span class="feature-strip-item">Your attendee data, always</span>
   <span class="feature-strip-item">No lock-in contracts</span>
-  <span class="feature-strip-item">Musician profiles</span>
+  <span class="feature-strip-item">Pay at door option</span>
 </div>
 
 <section>
@@ -297,7 +298,7 @@ const ldJson = [
 
 <div class="divider"></div>
 
-<section>
+<section id="how-it-works">
   <p class="eyebrow">How it works</p>
   <h2>From idea<br>to door-ready<br>in <em>5 minutes</em></h2>
   <p class="section-sub">Three steps. No training required.</p>
@@ -328,84 +329,34 @@ const ldJson = [
   <p class="section-sub">Stripped down to what actually matters for a local venue.</p>
   <div class="diff-grid">
     <div class="diff-card">
-      <div class="icon-wrap">🚫</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 0 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 0 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="m9 9 6 6"/><path d="m15 9-6 6"/></svg></div>
       <h3>Zero fan fees</h3>
       <p>The price you set is exactly what fans pay. No booking fee at checkout. More fans complete the purchase — less drop-off at the last step.</p>
     </div>
     <div class="diff-card">
-      <div class="icon-wrap">📱</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h2v2H9z"/><path d="M13 7h2v2h-2z"/><path d="M9 11h2v2H9z"/><path d="M12 18h.01"/></svg></div>
       <h3>Scan the door from your phone</h3>
       <p>A dedicated fullscreen check-in view for door staff. Scan QR codes, see live attendance count, get instant pass/fail feedback. No printer, no clipboard.</p>
     </div>
     <div class="diff-card">
-      <div class="icon-wrap">🔗</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
       <h3>Your permanent venue page</h3>
       <p>Every venue gets a shareable link — put it in your Instagram bio or Linktree. Fans see all your upcoming events in one place, year-round.</p>
     </div>
     <div class="diff-card">
-      <div class="icon-wrap">📊</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16v-5"/><path d="M12 16V8"/><path d="M17 16v-3"/></svg></div>
       <h3>Live sales + attendance</h3>
       <p>See tickets sold in real time before the night. Then watch the check-in counter climb as people arrive. Plan staff and bar stock with actual numbers.</p>
     </div>
     <div class="diff-card">
-      <div class="icon-wrap">💾</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg></div>
       <h3>You own your attendee data</h3>
       <p>Every buyer's name, email, and ticket status is yours — exportable as CSV anytime. No platform lock-in, no asking permission to reach your own audience.</p>
     </div>
     <div class="diff-card">
-      <div class="icon-wrap">🎟</div>
+      <div class="icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
       <h3>Free, paid, or pay at door</h3>
       <p>Free entry, fully ticketed, or reserve-now-pay-at-door. All three modes work. You choose per event — no extra setup for each.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section>
-  <p class="eyebrow">Get started</p>
-  <h2>Up and running<br>in <em>5 minutes.</em></h2>
-  <p class="section-sub">No training. No onboarding call. No credit card to start. Just create an account and go.</p>
-  <div class="start-grid">
-    <div class="start-card" data-num="1">
-      <span class="start-step">Step 1</span>
-      <h3>Create your account</h3>
-      <p>Sign up free. We'll get you set up — a real person reviews every application so we can help you hit the ground running.</p>
-    </div>
-    <div class="start-card" data-num="2">
-      <span class="start-step">Step 2</span>
-      <h3>Create your first event</h3>
-      <p>Add a name, date, ticket price, and capacity. Connect your Stripe account to receive payments. Your shareable ticket link is ready in under 3 minutes.</p>
-    </div>
-    <div class="start-card" data-num="3">
-      <span class="start-step">Step 3</span>
-      <h3>Share and start selling</h3>
-      <p>Post your link on Instagram, WhatsApp, or your website. Fans buy in seconds — no app, no account needed. Money lands in your Stripe account directly.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section>
-  <p class="eyebrow">Money</p>
-  <h2>How you<br><em>get paid.</em></h2>
-  <p class="section-sub" style="max-width:560px;">Evntry never holds your money. Stripe handles every payment and deposits directly into your bank account.</p>
-  <div class="card-grid">
-    <div class="start-card" data-num="1">
-      <span class="start-step">Step 01</span>
-      <h3>You set the price</h3>
-      <p>Publish your event with the ticket price you choose. Fans pay exactly that — no booking fees added on their side.</p>
-    </div>
-    <div class="start-card" data-num="2">
-      <span class="start-step">Step 02</span>
-      <h3>Stripe collects payments</h3>
-      <p>Every sale goes through your connected Stripe account. Industry-standard encryption. You own the transaction.</p>
-    </div>
-    <div class="start-card" data-num="3">
-      <span class="start-step">Step 03</span>
-      <h3>Stripe pays you directly</h3>
-      <p>Payouts land in your bank account on Stripe's standard schedule — typically within 2–7 days of each sale.</p>
     </div>
   </div>
 </section>
@@ -494,6 +445,18 @@ const ldJson = [
     <div class="faq-item">
       <div class="faq-q">Do fans pay extra fees?</div>
       <div class="faq-a">No. The price you set is exactly what fans pay at checkout. <strong>Evntry never adds booking fees on the fan side</strong> — no sticker shock, no drop-off at the last step.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does Evntry hold my money?</div>
+      <div class="faq-a">Never. Every payment goes through <strong>your own connected Stripe account</strong> and is paid straight into your bank. Evntry never touches ticket revenue.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is there a contract?</div>
+      <div class="faq-a">No. <strong>No long-term contract and no lock-in.</strong> Pro is month-to-month, and you can export your attendee data anytime.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens after I sign up?</div>
+      <div class="faq-a">A real person reviews every new venue account, usually within a day. <strong>We'll help you set up your first event</strong> so it's ready before you share the link.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">How quickly do I get paid?</div>
