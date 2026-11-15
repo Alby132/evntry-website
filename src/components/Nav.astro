@@ -8,6 +8,7 @@ const { active, fanStyle = false, lang = 'en' } = Astro.props;
 const hr = lang === 'hr';
 const t = {
   pricing: hr ? 'Cijene' : 'Pricing',
+  pricingHref: hr ? '/hr/pricing' : '/pricing',
   how: hr ? 'Kako funkcionira' : 'How it works',
   howHref: hr ? '/hr#how-it-works' : '/#how-it-works',
   about: hr ? 'O nama' : 'About',
@@ -18,7 +19,7 @@ const t = {
 <nav>
   <a href={t.home} class="logo">EVN<span>T</span>RY</a>
   <div class="nav-right">
-    <a href="/pricing" class={`nav-link${active === 'pricing' ? ' active' : ''}`}>{t.pricing}</a>
+    <a href={t.pricingHref} class={`nav-link${active === 'pricing' ? ' active' : ''}`}>{t.pricing}</a>
     <a href={t.howHref} class="nav-link">{t.how}</a>
     <a href="/about" class={`nav-link${active === 'about' ? ' active' : ''}`}>{t.about}</a>
     <a href="https://app.evntry.app/register" class="nav-cta" style="text-decoration:none;">{t.start}</a>
@@ -28,7 +29,7 @@ const t = {
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/pricing">{t.pricing}</a>
+  <a href={t.pricingHref}>{t.pricing}</a>
   <a href={t.howHref} onclick="closeMenu()">{t.how}</a>
   <a href="/about">{t.about}</a>
   <a href="/blog">Blog</a>

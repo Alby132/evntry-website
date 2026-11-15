@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const faqLd = [
+  { q: "Plaćaju li gosti dodatne naknade?", a: "Ne. Cijena koju postavite je točno ono što gosti plate. Evntry nikad ne dodaje naknade gostima. Upravo zato gosti zaista dovrše kupnju — bez neugodnog iznenađenja na kraju." },
+  { q: "Jesu li podaci o gostima moji?", a: "Da, u potpunosti. Popis gostiju — imena, e-mailovi, povijest kupnje — pripada vama. Možete ga izvesti bilo kada. Nikad ga ne dijelimo s trećima niti koristimo za vlastiti marketing." },
+  { q: "Kako dobivam novac?", a: "Izravno preko Stripea. Za plaćene ulaznice povežite svoj Stripe račun za isplate prije objave. Standardne Stripe naknade za obradu plaćanja plaća prostor, a isplate idu po Stripeovom uobičajenom rasporedu." },
+  { q: "Može li besplatni prvi event imati plaćene ulaznice?", a: "Da. Prvi objavljeni event može imati besplatne ulaznice, plaćene ili oboje. Evntry na taj event naplaćuje 0% naknade. Za plaćene ulaznice i dalje vrijede standardne Stripe naknade." },
+  { q: "Kada se troši besplatni event?", a: "Besplatni event se troši kada objavite prvi event. Skice se ne računaju. Otkazivanje ili brisanje objavljenog eventa ne daje novi besplatni event." },
+  { q: "Što nakon prvog eventa?", a: "Prije objave sljedećeg eventa javite nam se za Pro. Pro uključuje neograničen broj objavljenih evenata, a cijena se dogovara prema vašem prostoru i broju evenata." },
+  { q: "Kako se određuje cijena za Pro?", a: "Cijena za Pro ovisi o potrebama vašeg prostora i broju evenata. Rezervirajte poziv i dogovorit ćemo paket koji vam odgovara." },
+  { q: "Naplaćuje li Stripe zasebnu naknadu?", a: "Da. Za plaćene ulaznice vrijede standardne Stripe naknade za obradu plaćanja, koje plaća prostor. One su odvojene od Evntry naknade." },
+  { q: "Je li Evntry dostupan u mojoj zemlji?", a: "Evntry radi u Hrvatskoj, a sljedeće se širimo po EU. Stripe plaćanja rade u cijeloj Europi, pa ako organizirate evente drugdje, pišite na hello@evntry.app i javit ćemo vam možemo li vas uključiti odmah." },
+];
+
+const ldJson = [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqLd.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": { "@type": "Answer", "text": item.a }
+  }))
+}];
+---
+<BaseLayout
+  title="Cijene — Evntry"
+  description="Prvi objavljeni event bez Evntry naknade. Zatim Pro paket s cijenom prilagođenom vašem prostoru i broju evenata."
+  lang="hr"
+  alternates={[{ hreflang: 'en', href: 'https://evntry.app/pricing' }, { hreflang: 'hr', href: 'https://evntry.app/hr/pricing' }, { hreflang: 'x-default', href: 'https://evntry.app/pricing' }]}
+  ogTitle="Cijene — Evntry"
+  ogUrl="https://evntry.app/hr/pricing"
+  canonical="https://evntry.app/hr/pricing"
+  ldJson={ldJson}
+  activeNav="pricing"
+>
+
+<style is:global>
+  .hero { padding: 140px 6vw 80px; text-align: center; }
+  .hero .eyebrow, .cta-band .eyebrow { justify-content: center; }
+  .hero .eyebrow::after, .cta-band .eyebrow::after, .eyebrow.sym::after {
+    content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero h1 { font-size: clamp(56px, 9vw, 110px); text-align: center; max-width: 800px; margin: 0 auto 28px; }
+  .hero-sub { font-size: 18px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+  section { padding: 80px 6vw; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .plan { background: var(--surface); padding: 40px 32px 36px; display: flex; flex-direction: column; position: relative; }
+  .plan.featured { background: var(--surface2); }
+  .plan-badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 3px 8px; margin-bottom: 20px; align-self: flex-start; }
+  .plan-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); margin-bottom: 6px; line-height: 1; }
+  .plan-tagline { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; min-height: 58px; }
+  .plan-price { margin-bottom: 8px; display: flex; align-items: baseline; gap: 4px; }
+  .price-free { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 56px; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
+  .plan-fee { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .plan-fee strong { color: var(--text); font-weight: 600; }
+  .plan-note { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 14px 0 0; }
+  .plan-features { list-style: none; margin: 0 0 32px; flex: 1; }
+  .plan-features li { font-size: 14px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--faint); display: flex; align-items: flex-start; gap: 10px; line-height: 1.45; }
+  .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .plan-cta { display: block; text-align: center; padding: 13px 20px; border-radius: 8px; font-family: 'Figtree', sans-serif; font-weight: 600; font-size: 15px; text-decoration: none; transition: opacity 0.15s; }
+  .plan-cta.primary { background: var(--accent-btn); color: #fff; }
+  .plan-cta.secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .plan-cta:hover { opacity: 0.8; }
+  .hero-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 700px) {
+    .nav-link, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .plan-tagline { min-height: auto; }
+  }
+</style>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Jednostavne cijene</p>
+  <h1>Prvi event besplatno.<br>Zatim <em>jednostavno.</em></h1>
+  <p class="hero-sub">Prvi objavljeni event je na nama. Kad budete spremni za više, prilagodit ćemo Pro vašem prostoru.</p>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="pricing-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:720px;">
+    <div class="plan">
+      <div class="plan-badge" style="visibility:hidden">placeholder</div>
+      <div class="plan-name">Prvi event</div>
+      <div class="plan-tagline">Prvi event je na nama.</div>
+      <div class="plan-price">
+        <span class="price-free">Besplatno</span>
+      </div>
+      <div class="plan-fee">Prvi objavljeni event — besplatan ili s plaćenim ulaznicama — <strong>bez Evntry naknade.</strong></div>
+      <ul class="plan-features">
+        <li>Vaš prvi objavljeni event</li>
+        <li>Besplatne ili plaćene ulaznice</li>
+        <li>0% Evntry naknade</li>
+        <li>QR skeniranje na ulazu</li>
+        <li>Ulaznice stižu e-mailom</li>
+        <li>Praćenje prodaje uživo</li>
+        <li>Linkovi za event i ulaznice</li>
+        <li>Naslovna slika eventa</li>
+      </ul>
+      <a href="https://app.evntry.app/register" class="plan-cta secondary">Počnite besplatno</a>
+      <p class="plan-note">Za plaćene ulaznice vrijede standardne Stripe naknade. Za isplate je potreban povezan Stripe račun.</p>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">Po dogovoru</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-tagline">Za prostore koji žele više evenata i rast.</div>
+      <div class="plan-price">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--muted);letter-spacing:-0.01em;line-height:1;">Razgovarajmo</span>
+      </div>
+      <div class="plan-fee">Cijena prilagođena vašem prostoru i broju evenata.</div>
+      <ul class="plan-features">
+        <li>Sve iz paketa Prvi event</li>
+        <li>Neograničen broj objavljenih evenata</li>
+        <li>Izravna podrška osnivača</li>
+        <li>E-mail obavijesti kupcima ulaznica</li>
+        <li>Potpuna analitika</li>
+        <li>Promo kodovi i popusti</li>
+        <li>Galerija i video prostora</li>
+        <li>Cijena po volumenu, iz mjeseca u mjesec</li>
+      </ul>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="plan-cta primary">Rezervirajte poziv</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <p class="eyebrow sym" style="justify-content:center;">Pitanja</p>
+  <h2 style="text-align:center;margin-bottom:52px;">Kratki<br><em>odgovori.</em></h2>
+  <div class="faq-list">
+    {faqLd.map(item => (
+      <div class="faq-item">
+        <div class="faq-q">{item.q}</div>
+        <div class="faq-a" set:html={item.a.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="cta-band">
+  <p class="eyebrow">Krenite</p>
+  <h2>Počnite besplatno.<br><em>Rastite kad ste spremni.</em></h2>
+  <p class="section-sub">Objavite prvi event bez Evntry naknade. Rezervirajte poziv kad budete spremni za više.</p>
+  <div class="form-wrap">
+    <div class="hero-cta-row">
+      <a href="https://app.evntry.app/register" class="btn-primary" style="text-decoration:none;padding:14px 28px;">Otvorite besplatan račun →</a>
+      <a href="https://calendly.com/hello-evntry/30min" target="_blank" rel="noopener" class="btn-secondary">Rezervirajte poziv od 30 min</a>
+    </div>
+    <p class="form-note" style="text-align:center;margin-top:14px;">Bez kreditne kartice. Bez obveze.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() { q.closest('.faq-item').classList.toggle('open'); });
+  });
+</script>
+</BaseLayout>

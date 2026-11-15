@@ -180,5 +180,6 @@ for a, b in T:
     if n == 0:
         sys.exit(f'MISSING: {a[:70]}')
     s = s.replace(a, b)
+s = s.replace('href="/pricing"', 'href="/hr/pricing"')
 open(dst, 'w').write(s)
 print('ok', len(T))
